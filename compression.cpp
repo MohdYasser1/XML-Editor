@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include "utils.cpp"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ string keyCompression(string file){
             for(int k = 0; k < keys.size(); k++){
                 if(keys[k] == field_name){
                     file.replace(j+1, field_name_length, to_string(k));
+                    i-=(field_name_length-to_string(k).length());
                     found = true;        
                 }
             }
@@ -41,6 +43,7 @@ string keyCompression(string file){
                 keys.push_back(field_name);
                 //Replace the field name with the index
                 file.replace(j+1, field_name_length, to_string(keys.size()-1));
+                i-=(field_name_length-to_string(keys.size()-1).length());
             }
         }
     }
@@ -76,6 +79,64 @@ string compress(string file){
     return compressedFile;
 }
 
+string keyDecompress(string file){
+    /**
+     * This function reverses the actions done in keyCompress funtion by getting the keys from the file
+     * and placing the field names in its place
+     * 
+     * @param file This compressed file
+     * @return the decompressed files
+     */
+
+    //Get field names in a vector
+    vector<string> keys;
+    int i = file.length() - 1;
+    int j;
+    while(file[i] != '#'){
+        int field_name_length = 0;
+        j = i;
+        while(file[j] != ',' && file[j] != '#'){
+            field_name_length++;
+            j--;
+        }
+        if(file[j] == '#'){
+            keys.push_back(file.substr(j+1, field_name_length));
+            break;
+        }
+        i=j-1;
+        keys.push_back(file.substr(j+1, field_name_length));
+    }
+    file = file.substr(0, j);
+    keys = reverseVectorString(keys);    
+    for(int i = 1; i < file.length(); i++){
+        // cout << file[i] << endl;    
+        if(file[i] == '"' && file[i+1] == ':'){
+            int num_length = 0;
+            int k=i;
+            while(file[k-1] !='"'){
+                num_length++;
+                k--;
+            }
+        if (k >= 0) {
+            string numStr = file.substr(k, num_length);
+            // cout << numStr << endl;
+            // if (!numStr.empty() && numStr.find_first_not_of("0123456789") == string::npos) {
+
+                int num = stoi(numStr);
+                // if (num >= 0 && static_cast<size_t>(num) < keys.size()) {
+                std::string field_name = keys[num];
+                file.replace(k, num_length, field_name);
+                // cout << num_length << endl;
+                i += (field_name.length() - num_length);
+                // }
+            // }
+        }
+            
+        }
+    }
+    return file;
+}
+
 string decompress(string compressed_file){
     /**
      * This function decompresses the compressed doing the inverse of the compress function.
@@ -84,7 +145,11 @@ string decompress(string compressed_file){
      * @return a string containing the decompressed file contents to be made into a XML-file
      */
 
-    // TODO: Decompress the file
+    string decompressed_file;
+    // TODO: Huffman decoding
+    // TODO: Key-decompression
+    decompressed_file = keyDecompress(compressed_file);
+    // TODO: Pretifying 
 
     return compressed_file;
 }
