@@ -23,14 +23,14 @@ string keyCompression(string file){
             // Find word length
             int j = i-1;
             int field_name_length = 0; 
-            while(file[j] == '"'){
+            while(file[j] != '"'){
                 field_name_length++;
                 j--;
             }
             // Get field name
             string field_name = file.substr(j+1, field_name_length);
 
-            // TODO: check if field name already exists
+            // Check if field name already exists
             for(int k = 0; k < keys.size(); k++){
                 if(keys[k] == field_name){
                     file.replace(j+1, field_name_length, to_string(k));
@@ -40,17 +40,17 @@ string keyCompression(string file){
             if (found == false){
                 keys.push_back(field_name);
                 //Replace the field name with the index
-                file.replace(j+1, field_name_length, to_string(keys.size()));
+                file.replace(j+1, field_name_length, to_string(keys.size()-1));
             }
         }
     }
     // Add the keys to the end of file
-    string keys_to_file = "[";
+    string keys_to_file = "#"; // A special character that signals the beginning of the keys
     for (int i = 0; i < keys.size()-1; i++)
     {
         keys_to_file += (keys[i]+',');
     }
-    keys_to_file += keys[keys.size()-1] + ']';
+    keys_to_file += keys[keys.size()-1];
     file += keys_to_file;
      
     return file;
@@ -72,6 +72,8 @@ string compress(string file){
     string compressedFile;
     compressedFile = keyCompression(file);
     // TODO: Implement Huffman-encoding
+
+    return compressedFile;
 }
 
 string decompress(string compressed_file){
@@ -83,4 +85,6 @@ string decompress(string compressed_file){
      */
 
     // TODO: Decompress the file
+
+    return compressed_file;
 }
