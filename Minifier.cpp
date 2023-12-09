@@ -1,4 +1,3 @@
-#include "xml_minifier.h"
 
 // Function to minify a vector of strings representing a file
 string minifyFileContent(vector<string> fileLines)
