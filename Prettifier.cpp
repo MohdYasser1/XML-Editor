@@ -1,4 +1,3 @@
-#include "xml_prettifier.h"
 
 // Function to prettify XML content by organizing tags
 // One opening and one closing tag per line at most
