@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -48,4 +50,19 @@ vector<string> readXmlFile(const string& inputFile) {
     }
 
     return xmlContent;
+}
+
+//function to read content of an XML file and return as string.
+string readFileToString(const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << filename << endl;
+        return "";
+    }
+
+    stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+
+    return buffer.str();
 }
