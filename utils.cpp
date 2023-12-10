@@ -32,15 +32,20 @@ vector<string> reverseVectorString(vector<string> v){
 
 }
 
-// Read XML content from the input file
-ifstream input(inputFile);
-if (!input) {
-    cerr << "Error: Unable to open input file." << endl;
-    return 1;
-}
+vector<string> readXmlFile(const string& inputFile) {
+    vector<string> xmlContent;
 
-vector<string> xmlContent;
-string line;
-while (getline(input, line)) {
-    xmlContent.push_back(line);
+    // Read XML content from the input file
+    ifstream input(inputFile);
+    if (!input) {
+        cerr << "Error: Unable to open input file." << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    string line;
+    while (getline(input, line)) {
+        xmlContent.push_back(line);
+    }
+
+    return xmlContent;
 }
