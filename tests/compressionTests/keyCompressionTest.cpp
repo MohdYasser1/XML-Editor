@@ -28,4 +28,12 @@ int main(void)
     //cout<<keyCompression(test3)<<endl;
     //cout<<keyDecompress(test33);
     //PASSED
+
+    //Sample
+    string test4 = "{\"users\":{\"user\":[{\"id\":1,\"name\":\"AhmedAli\",\"posts\":{\"post\":[{\"body\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.Utenimadminimveniam,quisnostrudexercitationullamcolaborisnisiutaliquipexeacommodoconsequat.\",\"topics\":{\"topic\":[\"economy\",\"finance\"]}},{\"body\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.Utenimadminimveniam,quisnostrudexercitationullamcolaborisnisiutaliquipexeacommodoconsequat.\",\"topics\":{\"topic\":\"solar_energy\"}}]},\"followers\":{\"follower\":[{\"id\":2},{\"id\":3}]}},{\"id\":2,\"name\":\"YasserAhmed\",\"posts\":{\"post\":{\"body\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.Utenimadminimveniam,quisnostrudexercitationullamcolaborisnisiutaliquipexeacommodoconsequat.\",\"topics\":{\"topic\":\"education\"}}},\"followers\":{\"follower\":{\"id\":1}}},{\"id\":3,\"name\":\"MohamedSherif\",\"posts\":{\"post\":{\"body\":\"Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.Utenimadminimveniam,quisnostrudexercitationullamcolaborisnisiutaliquipexeacommodoconsequat.\",\"topics\":{\"topic\":\"sports\"}}},\"followers\":{\"follower\":{\"id\":1}}}]}}";
+    string test44 = keyCompression(test4);
+    cout<<keyCompression(test4)<<endl;
+    cout<<"\n\n";
+    cout<<keyDecompress(test44);
+
 }
