@@ -165,7 +165,6 @@ void printTree(const Node* node, int level) {
             </person>
         </root>
     )";
-
     // Parse the XML
     Node* root = parseXML(xmlContent);
 
