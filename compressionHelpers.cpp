@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <queue>
 #include "utils.cpp"
+#include "huffman.cpp"
 
 using namespace std;
 
@@ -59,10 +61,13 @@ string keyCompression(string file){
     return file;
 }
 
-// string HuffmanEncoding(string file){
-
-// }
-
+void huffmanCoding(string file_content){ //Do we name the compressed file by its name?
+    huffman h(file_content, "CompressedXML.huf");
+    h.create_pq();
+    h.create_huffman_tree();
+    h.calculate_huffman_codes();
+    h.coding_save();
+}
 string keyDecompress(string file){
     /**
      * This function reverses the actions done in keyCompress funtion by getting the keys from the file
@@ -119,4 +124,11 @@ string keyDecompress(string file){
         }
     }
     return file;
+}
+
+//We need to select the files
+string huffmanDecoding(string file_name){
+    huffman h(file_name);
+    h.recreate_huffman_tree();
+    return h.decoding_save();
 }
