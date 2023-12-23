@@ -60,11 +60,10 @@ private:
 };
 
 void printTree(const Node* node, int level);
-void printJsonTree(const Node* node, int level);
 Node* parseXML(const std::string& xml);
 std::string extractTagName(const std::string& line);
 std::string extractTagValue(const std::string& line, const std::string& tagName);
-void extractTagValuesRecursive(const Node* node, std::vector<TagValuePair>& tagValuePairs);
+//void extractTagValuesRecursive(const Node* node, std::vector<TagValuePair>& tagValuePairs);
 
 
 
