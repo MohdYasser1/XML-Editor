@@ -24,6 +24,7 @@ namespace GUIDS {
 			//
 			//TODO: Add the constructor code here
 			//
+
 		}
 
 	protected:
@@ -48,7 +49,7 @@ namespace GUIDS {
 
 
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
+
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Button^ button9;
 	private: System::Windows::Forms::Button^ button8;
@@ -59,6 +60,7 @@ namespace GUIDS {
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::TextBox^ textBox3;
 
 
 	private:
@@ -76,7 +78,6 @@ namespace GUIDS {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->button9 = (gcnew System::Windows::Forms::Button());
 			this->button8 = (gcnew System::Windows::Forms::Button());
@@ -87,22 +88,20 @@ namespace GUIDS {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// textBox1
 			// 
+			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox1->HideSelection = false;
 			resources->ApplyResources(this->textBox1, L"textBox1");
 			this->textBox1->Name = L"textBox1";
-			// 
-			// textBox2
-			// 
-			resources->ApplyResources(this->textBox2, L"textBox2");
-			this->textBox2->Name = L"textBox2";
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
 			// 
 			// panel1
 			// 
-			resources->ApplyResources(this->panel1, L"panel1");
 			this->panel1->Controls->Add(this->button9);
 			this->panel1->Controls->Add(this->button8);
 			this->panel1->Controls->Add(this->button7);
@@ -112,6 +111,7 @@ namespace GUIDS {
 			this->panel1->Controls->Add(this->button3);
 			this->panel1->Controls->Add(this->button2);
 			this->panel1->Controls->Add(this->button1);
+			resources->ApplyResources(this->panel1, L"panel1");
 			this->panel1->Name = L"panel1";
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel1_Paint);
 			// 
@@ -179,14 +179,22 @@ namespace GUIDS {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
+			// textBox3
+			// 
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			resources->ApplyResources(this->textBox3, L"textBox3");
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->ReadOnly = true;
+			// 
 			// MyForm
 			// 
 			this->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
 			resources->ApplyResources(this, L"$this");
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
+			this->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Name = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -200,7 +208,7 @@ namespace GUIDS {
 		Stream^ myStream;
 		OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
 		openFileDialog1->InitialDirectory = "";
-		openFileDialog1->Filter = "XML | *.xml | txt files (*.txt)|*.txt|All files (*.*)|*.*";
+		openFileDialog1->Filter = "XML |*.xml| txt files (*.txt)|*.txt|All files (*.*)|*.*";
 		openFileDialog1->FilterIndex = 1;
 		openFileDialog1->RestoreDirectory = true;
 
@@ -234,5 +242,9 @@ private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^
 }
 private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
