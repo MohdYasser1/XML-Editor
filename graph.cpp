@@ -17,8 +17,30 @@ public:
     }
 
     // Function to add an edge to the graph
-    void addEdge(int src, int dest) {
+    void follow(int src, int dest) {
         // For undirected graph, mark both src to dest and dest to src as 1
-        adjacencyMatrix[src][dest] = 1;
+        adjacencyMatrix[src-1][dest-1] = 1;
+    }
+
+    vector<int> getFollowing(int id){
+        vector<int> following;
+        for (int i = 0; i < numVertices; i++)
+        {
+            if (adjacencyMatrix[id-1][i])
+            {
+                following.push_back(i+1);
+            }     
+        }   
+    }
+
+    vector<int> getFollowers(int id){
+        vector<int> followers;
+        for (int i = 0; i < numVertices; i++)
+        {
+            if (adjacencyMatrix[i][id-1])
+            {
+                followers.push_back(i+1);
+            }  
+        }   
     }
 };
