@@ -2,20 +2,27 @@
 #include <fstream>
 #include <vector>
 #include <regex>
+using namespace std;
+struct Node {
 
-class Node {
+private:
+    string tagName;
+    string tagValue;
+    vector<Node*> children;
+    Node* parent = nullptr;
+
 public:
-    Node(const std::string& tagName, const std::string& tagValue = "") : tagName(tagName), tagValue(tagValue) {}
+    Node(const string& tagName, const string& tagValue = "") : tagName(tagName), tagValue(tagValue) {}
 
-    const std::string& getTagName() const {
+    const string& getTagName() const {
         return tagName;
     }
 
-    const std::string& getTagValue() const {
+    const string& getTagValue() const {
         return tagValue;
     }
 
-    void setTagValue(const std::string& value) {
+    void setTagValue(const string& value) {
         tagValue = value;
     }
 
@@ -23,7 +30,7 @@ public:
         children.push_back(child);
     }
 
-    const std::vector<Node*>& getChildren() const {
+    const vector<Node*>& getChildren() const {
         return children;
     }
 
@@ -35,14 +42,14 @@ public:
         return parent;
     }
 
-private:
-    std::string tagName;
-    std::string tagValue;
-    std::vector<Node*> children;
-    Node* parent = nullptr;
+
 };
 
 class TagValuePair {
+private:
+    std::string tag;
+    std::string value;
+
 public:
     TagValuePair(const std::string& tag, const std::string& value) : tag(tag), value(value) {}
 
@@ -54,15 +61,13 @@ public:
         return value;
     }
 
-private:
-    std::string tag;
-    std::string value;
+
 };
 
 void printTree(const Node* node, int level);
 Node* parseXML(const std::string& xml);
-std::string extractTagName(const std::string& line);
-std::string extractTagValue(const std::string& line, const std::string& tagName);
+string extractTagName(const std::string& line);
+string extractTagValue(const std::string& line, const std::string& tagName);
 
 
 
@@ -122,7 +127,7 @@ Node* parseXML(const std::string& xml) {
     return root;
 }
 
-std::string extractTagName(const std::string& line) {
+ string extractTagName(const std::string& line) {
     std::regex pattern("<(.*?)>");
     std::smatch matcher;
     if (std::regex_search(line, matcher, pattern)) {
