@@ -1,107 +1,85 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 
 using namespace std;
 
 // Function declarations
-void prettifyXmlContent(vector<string>& xmlLines);
-void mergeOpeningClosingTags(vector<string>& xmlLines);
-void mergeNonTagLines(vector<string>& xmlLines);
-void determineXmlIndentation(vector<string>& xmlContent, vector<int>& linesIndentation);
-void determineIndentationLevel(vector<string>& xmlContent, vector<int>& linesIndentation, int index);
-void addIndentation(vector<string>& xmlContent, const vector<int>& linesIndentation);
+string prettifyXmlContent(const string& xmlContent);
+void mergeOpeningClosingTags(string& xmlContent);
+void mergeNonTagLines(string& xmlContent);
+string determineXmlIndentation(const string& xmlContent);
 
-void xmlPrettifier(const string& inputFile) {
-    // Read XML content from the input file
-    ifstream input(inputFile);
-    if (!input) {
-        cerr << "Error: Unable to open input file." << endl;
-        return;
-    }
-
-    vector<string> xmlContent;
-    string line;
-    while (getline(input, line)) {
-        xmlContent.push_back(line);
-    }
-
+string xmlPrettifier(const string& inputXml) {
     // Prettify XML content
-    prettifyXmlContent(xmlContent);
+    string prettifiedXml = prettifyXmlContent(inputXml);
 
     // Determine and add indentation
-    vector<int> linesIndentation(xmlContent.size(), 0);
-    determineXmlIndentation(xmlContent, linesIndentation);
-    addIndentation(xmlContent, linesIndentation);
+    string indentedXml = determineXmlIndentation(prettifiedXml);
 
-    // Print prettified XML to console
-    for (const auto& line : xmlContent) {
-        cout << line << endl;
-    }
+    return indentedXml;
 }
 
 // Function to prettify XML content by organizing tags
 // One opening and one closing tag per line at most
-void prettifyXmlContent(vector<string>& xmlLines) {
-    mergeOpeningClosingTags(xmlLines);
-    mergeNonTagLines(xmlLines);
+string prettifyXmlContent(const string& xmlContent) {
+    string result = xmlContent;
+    mergeOpeningClosingTags(result);
+    mergeNonTagLines(result);
+    return result;
 }
 
 // Function to merge opening and closing tags on separate lines
-void mergeOpeningClosingTags(vector<string>& xmlLines) {
-    for (int i = 1; i < xmlLines.size(); i++) {
-        if (xmlLines[i][0] == '<' && xmlLines[i][1] == '/' && xmlLines[i - 1][0] != '<') {
-            xmlLines[i - 1].append(xmlLines[i]);
-            xmlLines.erase(xmlLines.begin() + i, xmlLines.begin() + i + 1);
-            i--;  // Decrement i to process the merged line again
+void mergeOpeningClosingTags(string& xmlContent) {
+    for (size_t i = 1; i < xmlContent.size(); i++) {
+        if (xmlContent[i] == '/' && xmlContent[i - 1] == '>') {
+            size_t lastOpeningBracket = xmlContent.rfind('<', i - 1);
+            if (lastOpeningBracket != string::npos) {
+                xmlContent.erase(lastOpeningBracket, i - lastOpeningBracket + 1);
+                i = lastOpeningBracket;  // Move i back to process the merged line again
+            }
         }
     }
 }
 
 // Function to merge non-tag lines with the previous line
-void mergeNonTagLines(vector<string>& xmlLines) {
-    for (int i = 1; i < xmlLines.size(); i++) {
-        if (xmlLines[i][0] != '<') {
-            xmlLines[i - 1].append(xmlLines[i]);
-            xmlLines.erase(xmlLines.begin() + i, xmlLines.begin() + i + 1);
-            i--;  // Decrement i to process the merged line again
+void mergeNonTagLines(string& xmlContent) {
+    for (size_t i = 1; i < xmlContent.size(); i++) {
+        if (xmlContent[i] != '<') {
+            size_t lastNewline = xmlContent.rfind('\n', i - 1);
+            if (lastNewline != string::npos) {
+                xmlContent.erase(lastNewline, 1);  // Remove the newline
+                i = lastNewline;  // Move i back to process the merged line again
+            }
         }
     }
 }
 
-// Function to determine the indentation level of each line in XML content
-void determineXmlIndentation(vector<string>& xmlContent, vector<int>& linesIndentation) {
-    linesIndentation[0] = 0;
+// Function to determine the indentation of XML content
+string determineXmlIndentation(const string& xmlContent) {
+    string indentedXml;
+    int indentationLevel = 0;
 
-    // Iterate through the XML content to determine indentation levels
-    for (int i = 1; i < xmlContent.size(); i++) {
-        if (xmlContent[i].find('<') != -1 && xmlContent[i - 1].find('<') != -1) {
-            determineIndentationLevel(xmlContent, linesIndentation, i);
+    for (size_t i = 0; i < xmlContent.size(); i++) {
+        if (xmlContent[i] == '<') {
+            if (i < xmlContent.size() - 1 && xmlContent[i + 1] == '/') {
+                indentationLevel--;
+                indentedXml += '\n';
+                for (int j = 0; j < indentationLevel; j++) {
+                    indentedXml += '\t';
+                }
+            } else {
+                indentedXml += '\n';
+                for (int j = 0; j < indentationLevel; j++) {
+                    indentedXml += '\t';
+                }
+                if (i < xmlContent.size() - 1 && xmlContent[i + 1] != '/') {
+                    indentationLevel++;
+                }
+            }
         }
-    }
-}
 
-// Function to determine the indentation level based on conditions
-void determineIndentationLevel(vector<string>& xmlContent, vector<int>& linesIndentation, int index) {
-    if (xmlContent[index - 1][xmlContent[index - 1].find_last_of('<') + 1] != '/' &&
-        xmlContent[index - 1][xmlContent[index - 1].find('>', xmlContent[index - 1].find_last_of('<')) - 1] != '/' &&
-        xmlContent[index][xmlContent[index].find('<') + 1] != '/' &&
-        xmlContent[index][xmlContent[index].find('>', xmlContent[index].find('<')) - 1] != '/') {
-        linesIndentation[index] = linesIndentation[index - 1] + 1;
-    } else if (xmlContent[index - 1][xmlContent[index - 1].find_last_of('<') + 1] == '/' &&
-               xmlContent[index][xmlContent[index].find('<') + 1] == '/') {
-        linesIndentation[index] = linesIndentation[index - 1] - 1;
-    } else {
-        linesIndentation[index] = linesIndentation[index - 1];
+        indentedXml += xmlContent[i];
     }
-}
 
-// Function to add indentation to each line based on the determined levels
-void addIndentation(vector<string>& xmlContent, const vector<int>&linesIndentation) {
-    // Iterate through each line and add appropriateindentation
-    for (int i = 0; i < xmlContent.size(); i++) {
-        for (int j = 0; j < linesIndentation[i]; j++) {
-            xmlContent[i] = "\t" + xmlContent[i];
-        }
-    }
+    return indentedXml;
 }
