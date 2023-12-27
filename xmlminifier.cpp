@@ -1,35 +1,30 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 
 using namespace std;
 
 // Function declarations
-string minifyFileContent(const vector<string>& fileLines);
+string minifyStringContent(const string& inputString);
 void removeLeadingWhitespace(vector<string>& lines);
 
-string xmlMinifier(const string& inputFile) {
-    // Read content from the input file
-    ifstream input(inputFile);
-    if (!input) {
-        cerr << "Error: Unable to open input file." << endl;
-        return "";
-    }
-
+string xmlMinifier(const string& inputString) {
+    // Convert the input string into a vector of lines
     vector<string> fileContent;
-    string line;
-    while (getline(input, line)) {
-        fileContent.push_back(line);
+    size_t start = 0, end;
+    while ((end = inputString.find('\n', start)) != string::npos) {
+        fileContent.push_back(inputString.substr(start, end - start));
+        start = end + 1;
     }
+    fileContent.push_back(inputString.substr(start));
 
-    // Minify file content
-    string minifiedContent = minifyFileContent(fileContent);
+    // Minify string content
+    string minifiedContent = minifyStringContent(fileContent);
 
     return minifiedContent;
 }
 
 // Function to minify a vector of strings representing a file
-string minifyFileContent(const vector<string>& fileLines) {
+string minifyStringContent(const vector<string>& fileLines) {
     // Create a copy of fileLines to avoid modifying the original vector
     vector<string> minifiedLines = fileLines;
 
