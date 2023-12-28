@@ -217,6 +217,12 @@ std::string jsonFormat(const Node* node, int level) {
 
     return result;
 }
+std::string print_json(const Node* node, int level = 0) {
+    std::string json = "{\n";
+    json += jsonFormat(node, level);
+    json += "\n}\n";
+    return json;
+}
 //for testing
 /*int main() {
     // Example XML data
@@ -289,12 +295,9 @@ std::string jsonFormat(const Node* node, int level) {
     // Parse XML
     Node* root = parseXML(xmlData);
 
-    // Convert XML to JSON
-    string jsonOutput = jsonFormat(root, 0);
-
-    // Output JSON to console
-    cout << jsonOutput << endl;
-
+  std::string jsonString = print_json(root);
+   std::cout << jsonString << std::endl;
+ 
     // Clean up memory (Implement a function to delete the XML tree nodes)
 
     return 0;
