@@ -22,24 +22,24 @@ public:
         adjacencyMatrix[src-1][dest-1] = 1;
     }
 
-    vector<int> getFollowing(int id){
-        vector<int> following;
+    vector<int> getFollower(int id){
+        vector<int> followers;
         for (int i = 0; i < numVertices; i++)
         {
             if (adjacencyMatrix[id-1][i])
             {
-                following.push_back(i+1);
+                followers.push_back(i+1);
             }     
         }   
     }
 
-    vector<int> getFollowers(int id){
-        vector<int> followers;
+    vector<int> getFollowing(int id){
+        vector<int> following;
         for (int i = 0; i < numVertices; i++)
         {
             if (adjacencyMatrix[i][id-1])
             {
-                followers.push_back(i+1);
+                following.push_back(i+1);
             }  
         }   
     }
