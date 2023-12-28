@@ -4,7 +4,10 @@
 #include <queue>
 #include "utils.cpp"
 #include "json.cpp"
+#include "jsonprettifier_jsonminifier.cpp"
 #include "huffman.cpp"
+#include "json2XML.cpp"
+#include "xmlprettifier.cpp"
 
 using namespace std;
 

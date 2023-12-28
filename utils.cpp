@@ -66,3 +66,16 @@ string readFileToString(const string& filename) {
 
     return buffer.str();
 }
+
+vector<string> splitStringByNewline(const string& input) {
+    vector<string> lines;
+    istringstream iss(input);
+
+    // Split the string by newline character and store each line
+    string line;
+    while (getline(iss, line)) {
+        lines.push_back(line);
+    }
+
+    return lines;
+}

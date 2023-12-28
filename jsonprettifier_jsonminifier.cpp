@@ -10,19 +10,9 @@ using namespace std;
 void prettifyJsonContent(vector<string>& jsonLines);
 void addIndentation(vector<string>& jsonLines, int indentLevel);
 
-string jsonPrettifier(const string& inputFilePath) {
-    // Read JSON content from the input file
-    ifstream input(inputFilePath);
-    if (!input) {
-        cerr << "Error: Unable to open input file." << endl;
-        return "";
-    }
+string jsonPrettifier(string content) {
 
-    vector<string> jsonContent;
-    string line;
-    while (getline(input, line)) {
-        jsonContent.push_back(line);
-    }
+    vector<string> jsonContent = splitStringByNewline(content);
 
     // Prettify JSON content
     prettifyJsonContent(jsonContent);
@@ -58,17 +48,13 @@ void prettifyJsonContent(vector<string>& jsonLines) {
     jsonLines = prettifiedLines;
 }
 
-string jsonMinifier(const string& inputFilePath) {
-    // Read JSON content from the input file
-    ifstream input(inputFilePath);
-    if (!input) {
-        cerr << "Error: Unable to open input file." << endl;
-        return "";
-    }
+string jsonMinifier(const string& input) {
+
+    string line;
+    istringstream iss(input);
 
     string jsonContent;
-    string line;
-    while (getline(input, line)) {
+    while (getline(iss, line)) {
         jsonContent += line;
     }
 
