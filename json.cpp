@@ -223,6 +223,12 @@ std::string print_json(const Node* node, int level = 0) {
     json += "\n}\n";
     return json;
 }
+
+string XML_2_Json(string XMLcontent){
+    Node* root = parseXML(XMLcontent);
+    string jsonString = print_json(root);
+    return jsonString;
+}
 //for testing
 /*int main() {
     // Example XML data

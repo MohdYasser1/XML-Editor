@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include "utils.cpp"
+#include "json.cpp"
 #include "huffman.cpp"
 
 using namespace std;

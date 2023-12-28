@@ -2,7 +2,7 @@
 
 using namespace std;
 
-string compress(string file){
+void compress(string file){
     /**
      * This function compresses the given JSON file after converting it to a string
      * There are 3 steps to the compression:
@@ -15,11 +15,13 @@ string compress(string file){
      */
 
     string compressedFile;
+    //XML to JSON
+    compressedFile = XML_2_Json(file);
+
     //Key-Compression
     compressedFile = keyCompression(file);
     // TODO: Implement Huffman-encoding
 
-    return compressedFile;
 }
 
 string decompress(string compressed_file){
