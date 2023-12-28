@@ -79,3 +79,13 @@ vector<string> splitStringByNewline(const string& input) {
 
     return lines;
 }
+
+string newLinesinString(string text) {
+    for (int i = 0; i < text.size(); i++)
+    {
+        if(text[i] == '\n'){
+            text.insert(i, "\r");
+        }
+    }
+    return text;
+}
