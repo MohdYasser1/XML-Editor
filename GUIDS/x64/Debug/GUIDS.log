@@ -1,4 +1,0 @@
-﻿  MyForm.cpp
-C:\jan\CSE Senior\Data\Project\XML-Editor-main\GUIDS\MyForm.cpp(10,1): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
-  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  GUIDS.vcxproj -> C:\jan\CSE Senior\Data\Project\XML-Editor-main\GUIDS\x64\Debug\GUIDS.exe
