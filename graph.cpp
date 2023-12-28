@@ -30,7 +30,8 @@ public:
             {
                 followers.push_back(i+1);
             }     
-        }   
+        } 
+        return followers;  
     }
 
     vector<int> getFollowing(int id){
@@ -41,6 +42,7 @@ public:
             {
                 following.push_back(i+1);
             }  
-        }   
+        }  
+        return following; 
     }
 };
