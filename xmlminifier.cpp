@@ -4,7 +4,7 @@
 using namespace std;
 
 // Function declarations
-string minifyStringContent(const string& inputString);
+string minifyStringContent(const vector<string>& fileLines);
 void removeLeadingWhitespace(vector<string>& lines);
 
 string xmlMinifier(const string& inputString) {
