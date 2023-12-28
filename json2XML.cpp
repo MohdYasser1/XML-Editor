@@ -1,4 +1,3 @@
-#include "json.cpp"
 #include <stack>
 
 using namespace std;
@@ -25,14 +24,14 @@ string json2XML_Converter(string jsonContent){
             //check the type of tag
             if (jsonContent[i+2] == '"')
             {
-                XMLContent += "<" + tag_name + ">\n";
+                XMLContent += "<" + tag_name + ">";
                 //get tag value
                 int j = i + 3;
                 while(jsonContent[j] != '"'){
                     XMLContent += jsonContent[j];
                     j++;
                 }
-                XMLContent += "\n</" + tag_name + ">\n";
+                XMLContent += "</" + tag_name + ">\n";
             }
             else if (jsonContent[i+2] == '[' || jsonContent[i+2] == '{'){
                 //get tag name length
@@ -50,11 +49,15 @@ string json2XML_Converter(string jsonContent){
             
         }
         if (jsonContent[i] == ']' || jsonContent[i] == '}'){
+            if(brackets.empty()){
+                break;
+            }
             XMLContent += "</"+ brackets.top().substr(1) + ">\n";
             brackets.pop();        
         }
         
     }
+    cout << XMLContent << endl;
     return XMLContent;
     
 }

@@ -38,8 +38,6 @@ string decompress(string compressed_file_path){
 
     //Key-decompression
     decompressed_file = keyDecompress(decompressed_file);
-    //Pretifying
-    decompressed_file = jsonPrettifier(decompressed_file);
     //Turning back to XML
     decompressed_file = xmlPrettifier(json2XML_Converter(decompressed_file));
 
