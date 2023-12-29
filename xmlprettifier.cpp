@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void xmlPrettifier(string& xml_string) {
+string xmlPrettifier(const string& xml_string) {
     vector<string> lines;
     istringstream ss(xml_string);
     string line;
@@ -28,8 +28,10 @@ void xmlPrettifier(string& xml_string) {
         }
     }
 
-    xml_string = "";
+    string formatted_xml = "";
     for (const auto& formatted_line : lines) {
-        xml_string += formatted_line + "\n";
+        formatted_xml += formatted_line + "\n";
     }
+
+    return formatted_xml;
 }
