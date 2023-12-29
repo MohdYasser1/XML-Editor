@@ -42,34 +42,42 @@ vector<string> readXmlFile(const string& inputFile) {
 }
 
 // Function to mark error lines in the XML content
-vector<string> markErrorLines(const vector<string>& xmlContent, const vector<pair<int, string>>& errorsFound) {
-    vector<string> markedXmlContent = xmlContent;
+string markErrorLines(const string& xmlContent, const vector<pair<int, string>>& errorsFound) {
+    stringstream markedXmlContent;
+    istringstream lines(xmlContent);
+    string line;
+    int currentLine = 1;
 
-    // Mark each line with error information
-    for (const auto& error : errorsFound) {
-        int lineNumber = error.first - 1;  // Adjust to 0-based index
-        if (lineNumber >= 0 && lineNumber < markedXmlContent.size()) {
-            markedXmlContent[lineNumber] += " <-- " + error.second;
+    while (getline(lines, line)) {
+        markedXmlContent << line;
+        for (const auto& error : errorsFound) {
+            if (error.first == currentLine) {
+                markedXmlContent << " <-- " << error.second;
+            }
         }
+        markedXmlContent << '\n';
+        ++currentLine;
     }
 
-    return markedXmlContent;
+    return markedXmlContent.str();
 }
 
 // Function to check XML content and capture errors
-vector<string> checkXML(vector<string>& xmlContent) {
+string checkXML(const string& xmlContent) {
     int currentLine = 0;
-    int totalLines = xmlContent.size();
+    int totalLines = count(xmlContent.begin(), xmlContent.end(), '\n') + 1;
     std::stack<XMLLabel> labelStack;
     vector<pair<int, string>> errorsFound;
 
-    // Loop through each line of the XML file
-    while (currentLine < totalLines) {
-        string currentLineContent = xmlContent[currentLine];
+    stringstream checkedXmlContent(xmlContent);
+
+    // Loop through each line of the XML content
+    string currentLineContent;
+    while (getline(checkedXmlContent, currentLineContent)) {
         int currentCharIndex = 0;
 
         // Loop through each character in the line
-        while (currentLineContent[currentCharIndex] != '\0') {
+        while (currentCharIndex < currentLineContent.size()) {
             // Check if the character is the beginning of a tag
             if (currentLineContent[currentCharIndex] == '<') {
                 std::string labelName;
@@ -152,7 +160,6 @@ vector<string> checkXML(vector<string>& xmlContent) {
 
     return markErrorLines(xmlContent, errorsFound);
 }
-
 
 // Function to correct XML content and capture errors
 vector<string> correctXML(const vector<string>& xmlContent) {
