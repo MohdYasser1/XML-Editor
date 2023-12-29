@@ -90,3 +90,13 @@ string newLinesinString(string text) {
     }
     return text;
 }
+
+string vector2string(vector<string> text){
+    string str = "";
+    for (int i = 0; i < text.size()-1; i++)
+    {
+        str += text[i] + "\n";
+    }
+    str += text[text.size()-1];
+    return str;
+}
