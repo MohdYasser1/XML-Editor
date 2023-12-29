@@ -7,3 +7,4 @@ public:
     static string insert_taps(int level);
 };
 string jsonFormat(const Node* node, int level);
+string insert_taps(int level);
