@@ -50,7 +50,7 @@ std::string jsonFormat(const Node* node, int level) {
 
     return result;
 }
-std::string print_json(const Node* node, int level = 0) {
+std::string print_json(const Node* node, int level ) {
     std::string json = "{\n";
     json += jsonFormat(node, level);
     json += "\n}\n";
@@ -59,7 +59,7 @@ std::string print_json(const Node* node, int level = 0) {
 
 string XML_2_Json(string XMLcontent){
     Node* root = parseXML(XMLcontent);
-    string jsonString = print_json(root);
+    string jsonString = print_json(root, 0);
     return jsonString;
 }
 //for testing

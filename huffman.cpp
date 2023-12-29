@@ -186,7 +186,16 @@ public:
         in += (char) binary_to_decimal(s);
         in+= (char) count;
 
+        cout << "File name: " << out_file_name << endl;
+        cout << "Data to write: " << in << endl;
+
         out_file.write(in.c_str(), in.size());
+        // Check for errors in file write operation
+        if (out_file.fail()) {
+         cout << "Error writing to file!" << endl;
+        } else {
+           cout << "Data successfully written to file." << endl;
+        }
         out_file.close();
     }
     void recreate_huffman_tree(){
