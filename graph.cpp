@@ -46,3 +46,33 @@ public:
         return following; 
     }
 };
+
+class User {
+public:
+    int id;
+    std::string name;
+    std::vector<int> followers;
+
+    void addFollower(int followerId) {
+        followers.push_back(followerId);
+    }
+};
+
+void followers_list(Node* node, std::vector<User>& users) {
+    for (const auto& userNode : node->getChildren()) {
+        User user;
+        for (const auto& userAttr : userNode->getChildren()) {
+            if (userAttr->getTagName() == "id") {
+                user.id = std::stoi(userAttr->getTagValue());
+            } else if (userAttr->getTagName() == "name") {
+                user.name = userAttr->getTagValue();
+            } else if (userAttr->getTagName() == "followers") {
+                for (const auto& follower : userAttr->getChildren()) {
+                    const auto& followerIdNode = follower->getChildren()[0];
+                    user.addFollower(std::stoi(followerIdNode->getTagValue()));
+                }
+            }
+        }
+        users.push_back(user);
+    }
+}
