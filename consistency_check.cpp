@@ -4,6 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <utility>  // for std::pair
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,25 +23,22 @@ public:
 // Constructor for XMLLabel class
 XMLLabel::XMLLabel(std::string n, int line, int pos) : name(n), lineNumber(line), insertionPosition(pos) {}
 
-
-// Function to read XML content from a file
-vector<string> readXmlFile(const string& inputFile) {
-    vector<string> xmlContent;
-
-    // Read XML content from the input file
-    ifstream input(inputFile);
-    if (!input) {
-        cerr << "Error: Unable to open input file." << endl;
-        exit(EXIT_FAILURE);
+//function to read content of an XML file and return as string.
+string readFileToString(const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Unable to open file: " << filename << endl;
+        return "";
     }
 
-    string line;
-    while (getline(input, line)) {
-        xmlContent.push_back(line);
-    }
+    stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
 
-    return xmlContent;
+    return buffer.str();
 }
+
+
 
 // Function to mark error lines in the XML content
 string markErrorLines(const string& xmlContent, const vector<pair<int, string>>& errorsFound) {
@@ -160,7 +159,7 @@ string checkXML(const string& xmlContent) {
 
     return markErrorLines(xmlContent, errorsFound);
 }
-
+/*
 // Function to correct XML content and capture errors
 vector<string> correctXML(const vector<string>& xmlContent) {
     int currentLine = 0;
@@ -265,30 +264,20 @@ vector<string> correctXML(const vector<string>& xmlContent) {
     return correctedXmlContent;
 }
 
-
+*/
 // Main function
 int main() {
     // Example usage with reading XML content from a file
     string filename = "sample_test.xml"; // Replace with your XML file name
-    vector<string> xmlContent =readXmlFile(filename);
+   string xmlContent = readFileToString(filename);
 
 
     // Call the function to check XML consistency and capture errors
-    vector<string> markedXmlContent = checkXML(xmlContent);
+    string markedXmlContent = checkXML(xmlContent);
 
     // Print the marked XML content
     cout << "Original XML with Error Lines Marked:\n";
-    for (const auto& line : markedXmlContent) {
-        cout << line << endl;
-    }
-
-     vector<string> correctedXmlContent = correctXML(xmlContent);
-
-    // Print the corrected XML content
-    cout << "Corrected XML content:\n";
-    for (const auto& line : correctedXmlContent) {
-        cout << line << endl;
-    }
+    cout << markedXmlContent << endl;
 
 
     return 0;
