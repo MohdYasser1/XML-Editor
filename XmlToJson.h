@@ -9,4 +9,4 @@ public:
 string jsonFormat(const Node* node, int level);
 string insert_taps(int level);
 string XML_2_Json(string XMLcontent);
-print_json(const Node* node, int level = 0);
+string print_json(const Node* node, int level = 0);
