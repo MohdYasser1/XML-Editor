@@ -1,77 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <regex>
-using namespace std;
-struct Node {
 
-private:
-    string tagName;
-    string tagValue;
-    vector<Node*> children;
-    Node* parent = nullptr;
-
-public:
-    Node(const string& tagName, const string& tagValue = "") : tagName(tagName), tagValue(tagValue) {}
-
-    const string& getTagName() const {
-        return tagName;
-    }
-
-    const string& getTagValue() const {
-        return tagValue;
-    }
-
-    void setTagValue(const string& value) {
-        tagValue = value;
-    }
-
-    void addChild(Node* child) {
-        children.push_back(child);
-    }
-
-    const vector<Node*>& getChildren() const {
-        return children;
-    }
-
-    void setParent(Node* parent) {
-        this->parent = parent;
-    }
-
-    Node* getParent() const {
-        return parent;
-    }
-
-
-};
-
-class TagValuePair {
-private:
-    std::string tag;
-    std::string value;
-
-public:
-    TagValuePair(const std::string& tag, const std::string& value) : tag(tag), value(value) {}
-
-    const std::string& getTag() const {
-        return tag;
-    }
-
-    const std::string& getValue() const {
-        return value;
-    }
-
-
-};
-
-void printTree(const Node* node, int level);
-Node* parseXML(const std::string& xml);
-string extractTagName(const std::string& line);
-string extractTagValue(const std::string& line, const std::string& tagName);
-
-
-
-
+#include "parsingXml.h"
 
 Node* parseXML(const std::string& xml) {
     Node* root = nullptr;
@@ -145,13 +73,15 @@ std::string extractTagValue(const std::string& line, const std::string& tagName)
     return "";
 }
 
-void printTree(const Node* node, int level) {
+string printTree(const Node* node, int level) {
+    string s;
     std::string indent(level, ' ');
     std::cout << indent << "Tag: " << node->getTagName() << ", Value: " << node->getTagValue() << std::endl;
 
     for (const auto& child : node->getChildren()) {
-        printTree(child, level + 1);
+      s+= printTree(child, level + 1);
     }
+    return s;
 }
 
 //test
@@ -174,7 +104,8 @@ void printTree(const Node* node, int level) {
 
     // Print the tree structure
     std::cout << "Tree structure:\n";
-    printTree(root, 0);
+   string tree= printTree(root, 0);
+   cout<< tree<<endl;
   // Clean up memory
     delete root;
 
