@@ -3,7 +3,7 @@
 #include <stack>
 #include <vector>
 #include <fstream>
-#include <utility>  // for std::pair
+#include <utility>
 #include <sstream>
 #include <algorithm>
 
@@ -22,23 +22,6 @@ public:
 
 // Constructor for XMLLabel class
 XMLLabel::XMLLabel(std::string n, int line, int pos) : name(n), lineNumber(line), insertionPosition(pos) {}
-
-//function to read content of an XML file and return as string.
-string readFileToString(const string& filename) {
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Unable to open file: " << filename << endl;
-        return "";
-    }
-
-    stringstream buffer;
-    buffer << file.rdbuf();
-    file.close();
-
-    return buffer.str();
-}
-
-
 
 // Function to mark error lines in the XML content
 string markErrorLines(const string& xmlContent, const vector<pair<int, string>>& errorsFound) {
@@ -159,18 +142,19 @@ string checkXML(const string& xmlContent) {
 
     return markErrorLines(xmlContent, errorsFound);
 }
-/*
-// Function to correct XML content and capture errors
-vector<string> correctXML(const vector<string>& xmlContent) {
+
+// Function to correct XML content
+std::string correctXML(const std::string& xmlContent) {
     int currentLine = 0;
-    int totalLines = xmlContent.size();
+    int totalLines = 1; // Since we're working with a single string
     std::stack<XMLLabel> labelStack;
 
-    vector<string> correctedXmlContent = xmlContent;
+    // Convert the input string to a vector of strings
+    std::vector<std::string> correctedXmlContent = {xmlContent};
 
     // Loop through each line of the XML file
     while (currentLine < totalLines) {
-        std::string currentLineContent = correctedXmlContent[currentLine];
+        std::string& currentLineContent = correctedXmlContent[currentLine];
         int currentCharIndex = 0;
 
         // Loop through each character in the line
@@ -261,24 +245,14 @@ vector<string> correctXML(const vector<string>& xmlContent) {
         correctedXmlContent.push_back(tempLabel);
     }
 
-    return correctedXmlContent;
+    // Convert the vector of strings back to a single string
+    std::string result;
+    for (const auto& line : correctedXmlContent) {
+        result += line + '\n';
+    }
+
+    return result;
 }
 
-*/
-// Main function
-int main() {
-    // Example usage with reading XML content from a file
-    string filename = "sample_test.xml"; // Replace with your XML file name
-   string xmlContent = readFileToString(filename);
 
 
-    // Call the function to check XML consistency and capture errors
-    string markedXmlContent = checkXML(xmlContent);
-
-    // Print the marked XML content
-    cout << "Original XML with Error Lines Marked:\n";
-    cout << markedXmlContent << endl;
-
-
-    return 0;
-}
