@@ -1,4 +1,4 @@
-#include "json.h"
+#include "XmlToJson.h"
 std::string jsonFormat(const Node* node, int level);
 
 Node* parseXML(const std::string& xml) {
@@ -73,12 +73,12 @@ string extractTagValue(const std::string& line, const std::string& tagName) {
     return "";
 }
 
-void printTree(const Node* node, int level) {
+void printTreeC(const Node* node, int level) {
     std::string indent(level, ' ');
     std::cout << indent << "Tag: " << node->getTagName() << ", Value: " << node->getTagValue() << std::endl;
 
     for (const auto& child : node->getChildren()) {
-        printTree(child, level + 1);
+        printTreeC(child, level + 1);
     }
 }
 

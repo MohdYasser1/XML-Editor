@@ -3,7 +3,7 @@
 #include <vector>
 #include <queue>
 #include "utils.cpp"
-#include "json.cpp"
+#include "XMLToJson.cpp"
 #include "jsonprettifier_jsonminifier.cpp"
 #include "huffman.cpp"
 #include "json2XML.cpp"
