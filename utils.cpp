@@ -86,6 +86,7 @@ string newLinesinString(string text) {
         if(text[i] == '\n'){
             text.insert(i, "\r");
         }
+        i++;
     }
     return text;
 }
