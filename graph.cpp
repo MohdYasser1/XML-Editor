@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include "parsingXml.h"
 using namespace std;
 
 class Graph {
