@@ -33,6 +33,27 @@ The xmlMinifier function employs the remove-erase idiom to eliminate unnecessary
 
 ### Decompressing:
 
+## File Storage
+
+### Saved Files Location
+
+The XML Editor saves files to the following directory:
+
+```
+XML-Editor\GUIDS\x64\Debug\Saved files
+```
+
+All files saved through the GUI will be stored in this directory.
+
+### Compression File Location
+
+The compression files (with a `.huf` extension) are saved to the following directory:
+
+```
+XML-Editor\GUIDS
+```
+
+Make sure not to modify or delete any essential files in this directory to ensure proper functionality.
 ## Level 2
 
 ### Network Analysis:
