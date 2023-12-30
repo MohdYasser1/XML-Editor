@@ -114,6 +114,39 @@ public:
 
         return mutualFollowers;
     }
+    vector<int> suggestUsersToFollow(int userId)
+    {
+        vector<int> suggestedUsers;
+
+        vector<int> followers = getFollower(userId);
+
+        for (int follower : followers)
+        {
+            vector<int> followersOfFollower = getFollower(follower);
+
+            for (int i = 0; i < followersOfFollower.size(); ++i)
+            {
+                int suggestedUser = followersOfFollower[i];
+
+                bool isAlreadySuggested = false;
+                for (int j = 0; j < suggestedUsers.size(); ++j)
+                {
+                    if (suggestedUser == suggestedUsers[j] || suggestedUser == userId)
+                    {
+                        isAlreadySuggested = true;
+                        break;
+                    }
+                }
+
+                if (!isAlreadySuggested)
+                {
+                    suggestedUsers.push_back(suggestedUser);
+                }
+            }
+        }
+
+        return suggestedUsers;
+    }
     
 };
 
