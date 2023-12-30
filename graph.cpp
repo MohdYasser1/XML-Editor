@@ -3,72 +3,158 @@
 #include "parsingXml.h"
 using namespace std;
 
-class Graph {
+class Graph
+{
 private:
     vector<vector<int>> adjacencyMatrix;
     int numVertices;
 
 public:
     // Constructor to initialize the graph with a specific number of vertices
-    Graph(int n){
+    Graph(int n)
+    {
         numVertices = n;
         // Initialize the adjacency matrix with all 0s initially
         adjacencyMatrix.resize(numVertices, std::vector<int>(numVertices, 0));
     }
 
     // Function to add an edge to the graph
-    void follow(int src, int dest) {
+    void follow(int src, int dest)
+    {
         // For undirected graph, mark both src to dest and dest to src as 1
-        adjacencyMatrix[src-1][dest-1] = 1;
+        adjacencyMatrix[src - 1][dest - 1] = 1;
     }
 
-    vector<int> getFollower(int id){
+    vector<int> getFollower(int id)
+    {
         vector<int> followers;
         for (int i = 0; i < numVertices; i++)
         {
-            if (adjacencyMatrix[id-1][i])
+            if (adjacencyMatrix[id - 1][i])
             {
-                followers.push_back(i+1);
-            }     
-        } 
-        return followers;  
+                followers.push_back(i + 1);
+            }
+        }
+        return followers;
     }
 
-    vector<int> getFollowing(int id){
+    vector<int> getFollowing(int id)
+    {
         vector<int> following;
         for (int i = 0; i < numVertices; i++)
         {
-            if (adjacencyMatrix[i][id-1])
+            if (adjacencyMatrix[i][id - 1])
             {
-                following.push_back(i+1);
-            }  
-        }  
-        return following; 
+                following.push_back(i + 1);
+            }
+        }
+        return following;
     }
+    int getMostInfluencerUser(Graph &graph)
+    {
+        int maxFollowers = 0;
+        int mostInfluencerUserId = 0;
+        for (int i = 1; i <= graph.numVertices; i++)
+        {
+            int followers = graph.getFollower(i).size();
+            if (followers > maxFollowers)
+            {
+                maxFollowers = followers;
+                mostInfluencerUserId = i;
+            }
+        }
+        return mostInfluencerUserId;
+    }
+    int getMostActiveUser(Graph &graph)
+    {
+        int maxTotal = 0;
+        int mostActiveUserId = 0;
+        for (int i = 1; i <= graph.numVertices; i++)
+        {
+            int followingNum = graph.getFollowing(i).size();
+            int followersNum = graph.getFollower(i).size();
+            int totalNum = followingNum + followersNum;
+            for(int followers:graph.getFollower(i)){
+                for(int following:graph.getFollowing(i)){
+                    if(followers==following){
+                        totalNum--;
+                    }
+                }
+            }
+            if (totalNum > maxTotal)
+            {
+                maxTotal = totalNum;
+                mostActiveUserId = i;
+            }
+        }
+        return mostActiveUserId;
+    }
+    vector<int> getMutualFollowers(int userId1, int userId2)
+    {
+        vector<int> mutualFollowers;
+
+        vector<int> followers1 = getFollower(userId1);
+        vector<int> followers2 = getFollower(userId2);
+
+        for (int i = 0; i < followers1.size(); i++)
+        {
+            int follower1 = followers1[i];
+
+            for (int j = 0; j < followers2.size(); j++)
+            {
+                int follower2 = followers2[j];
+
+                if (follower1 == follower2)
+                {
+                    mutualFollowers.push_back(follower1);
+                    break;
+                }
+            }
+        }
+
+        return mutualFollowers;
+    }
+    
 };
 
-class User {
+
+
+
+
+
+class User
+{
 public:
     int id;
     std::string name;
     std::vector<int> followers;
 
-    void addFollower(int followerId) {
+    void addFollower(int followerId)
+    {
         followers.push_back(followerId);
     }
 };
 
-void followers_list(Node* node, std::vector<User>& users) {
-    for (const auto& userNode : node->getChildren()) {
+void followers_list(Node *node, std::vector<User> &users)
+{
+    for (const auto &userNode : node->getChildren())
+    {
         User user;
-        for (const auto& userAttr : userNode->getChildren()) {
-            if (userAttr->getTagName() == "id") {
+        for (const auto &userAttr : userNode->getChildren())
+        {
+            if (userAttr->getTagName() == "id")
+            {
                 user.id = std::stoi(userAttr->getTagValue());
-            } else if (userAttr->getTagName() == "name") {
+            }
+            else if (userAttr->getTagName() == "name")
+            {
                 user.name = userAttr->getTagValue();
-            } else if (userAttr->getTagName() == "followers") {
-                for (const auto& follower : userAttr->getChildren()) {
-                    const auto& followerIdNode = follower->getChildren()[0];
+            }
+            else if (userAttr->getTagName() == "followers")
+            {
+                for (const auto &follower : userAttr->getChildren())
+                {
+                    const auto &followerIdNode = follower->getChildren()[0];
                     user.addFollower(std::stoi(followerIdNode->getTagValue()));
                 }
             }
