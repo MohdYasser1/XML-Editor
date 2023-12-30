@@ -1,15 +1,9 @@
 #include "XmlToJson.h"
 
-string insert_taps(int level) {
-    string taps = "";
-    for (int i = 0; i < level; i++) {
-        taps += "\t";
-    }
-    return taps;
-}
+
 std::string jsonFormat(const Node* node, int level) {
     std::string result;
-
+  std::string indent(level, '   ');
     if (!node->getChildren().empty()) {
         bool hasSameTagName = false;
         for (size_t i = 1; i < node->getChildren().size(); ++i) {
@@ -19,7 +13,7 @@ std::string jsonFormat(const Node* node, int level) {
             }
         }
 
-        result += insert_taps(level) + "\"" + node->getTagName() + "\" : ";
+        result += indent + "\"" + node->getTagName() + "\" : ";
         if (hasSameTagName) {
             result += "[\n";
             for (size_t i = 0; i < node->getChildren().size(); ++i) {
@@ -30,7 +24,7 @@ std::string jsonFormat(const Node* node, int level) {
                 const Node* child = node->getChildren()[i];
                 result += jsonFormat(child, level + 1);
             }
-            result += "\n" + insert_taps(level) + "]";
+            result += "\n" + indent + "]";
         } else {
             result += "{\n";
             for (size_t i = 0; i < node->getChildren().size(); ++i) {
@@ -41,10 +35,10 @@ std::string jsonFormat(const Node* node, int level) {
                 const Node* child = node->getChildren()[i];
                 result += jsonFormat(child, level + 1);
             }
-            result += "\n" + insert_taps(level) + "}";
+            result += "\n" + indent + "}";
         }
     } else {
-        result += insert_taps(level) + "\"" + node->getTagName() + "\" : ";
+        result +=indent + "\"" + node->getTagName() + "\" : ";
         result += "\"" + node->getTagValue() + "\" , ";
     }
 
