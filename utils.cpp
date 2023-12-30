@@ -80,15 +80,17 @@ vector<string> splitStringByNewline(const string& input) {
     return lines;
 }
 
-string newLinesinString(string text) {
-    for (int i = 0; i < text.size(); i++)
-    {
-        if(text[i] == '\n'){
-            text.insert(i, "\r");
+string newLinesinString(string input) {
+    string result;
+    for (size_t i = 0; i < input.length(); i++) {
+        if (input[i] == '\n') {
+            result += "\r\n";
+           
         }
-        i++;
+        else {
+            result += input[i];
+        }
     }
-    return text;
 }
 
 string vector2string(vector<string> text){
