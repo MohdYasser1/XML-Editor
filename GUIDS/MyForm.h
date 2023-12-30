@@ -4,6 +4,17 @@
 #include <iostream>
 #include <msclr\marshal_cppstd.h>//to convert std::string to String ^ and vice versa
 #include <msclr/marshal_cppstd.h>
+//#include "../xmlprettifier.cpp"
+//#include "../xmlminifier.cpp"
+//#include "../json.cpp"
+#include "../consistency_check.cpp"
+//#include "../utils.cpp"
+#include "../xmlminifier.cpp"
+//#include "../xmlprettifier.cpp"
+#include "../compression.cpp"
+#include "../undo_redo.cpp"
+//#include "../XmlToJson.cpp"
+
 
 
 
@@ -21,7 +32,11 @@ namespace GUIDS {
 	using namespace msclr::interop; // Required for string conversions
 
 
+	//GUIDS::Operation globalOperation;
+	// Forward declaration of the Operation class
 
+	// Declare a global object of the Operation class
+	//extern Operation globalOperation;
 
 	/// <summary>
 	/// Summary for MyForm
@@ -30,7 +45,6 @@ namespace GUIDS {
 	{
 		String^ name = "XML";
 		String^ state = "xml";
-
 		//
 		//String^ managedString = "Hello, World!";
 		//std::string* nativeString = msclr::interop::marshal_as<std::string*>(managedString);
@@ -165,6 +179,7 @@ namespace GUIDS {
 			resources->ApplyResources(this->button12, L"button12");
 			this->button12->Name = L"button12";
 			this->button12->UseVisualStyleBackColor = true;
+			this->button12->Click += gcnew System::EventHandler(this, &MyForm::button12_Click);
 			// 
 			// button11
 			// 
@@ -235,6 +250,7 @@ namespace GUIDS {
 			resources->ApplyResources(this->button3, L"button3");
 			this->button3->Name = L"button3";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click_1);
 			// 
 			// button2
 			// 
@@ -254,6 +270,9 @@ namespace GUIDS {
 			// 
 			// textBox2
 			// 
+			this->textBox2->AcceptsReturn = true;
+			this->textBox2->AcceptsTab = true;
+			this->textBox2->AllowDrop = true;
 			resources->ApplyResources(this->textBox2, L"textBox2");
 			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->textBox2->Name = L"textBox2";
@@ -326,22 +345,56 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^ e) {
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	input = checkXML(input); 
+	input = newLinesinString(input);
+	System::String^ output = msclr::interop::marshal_as<String^>(input);
+	textBox2->Text = output; 
 	name = "Erorr Detection";
 	state = "xml";
 }	
 private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^ e) {
+
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	input = XML_2_Json(input);
+	input = newLinesinString(input);
+	System::String^ output = msclr::interop::marshal_as<String^>(input);
+	textBox2->Text = output;
+
+	
 	name = "JSON";
 	state = "json";
 }
 private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	input = xmlPrettifier(input);
+	//input = nreplaceNewLines(input);
+	System::String^ output = msclr::interop::marshal_as<String^>(input);
+	textBox2->Text = output;
 	name = "Prettifying";
 	state = "xml";
 }
 private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
-	
 	name = "Compression";
 	state = "huf";
+
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	compress(input);
+	//System::String^ output = msclr::interop::marshal_as<String^>(input);
+	//textBox2->Text = output;
+	/*huffman h(input, "CompressedXML.huf");
+	h.create_pq();
+	h.create_huffman_tree();
+	h.calculate_huffman_codes();
+	h.coding_save();*/
+	//StreamWriter^ sw = gcnew StreamWriter(Application::StartupPath + "\\Saved Files" + "\\" + name + "." + state);
+	//sw->Write(textBox2->Text);
+	//sw->Flush();
+	//sw->Close();
 }
+
+
+	
 private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
 	Stream^ myStream1;
 	OpenFileDialog^ openFileDialog2 = gcnew OpenFileDialog;
@@ -357,31 +410,73 @@ private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e
 
 			String^ fileName = openFileDialog2->InitialDirectory + openFileDialog2->FileName;
 			String^ readFile = File::ReadAllText(fileName);
+			std::string input = msclr::interop::marshal_as<std::string>(fileName);
+			input = decompress(input);
+//			input = xmlPrettifier(input);
+
+			input = newLinesinString(input);
+
+			System::String^ output = msclr::interop::marshal_as<String^>(input);
+			textBox2->Text = output;
+
 
 			// Write complete file path to file path text box
 
-			textBox1->Text = readFile;
 
 			myStream1->Close();
 		}
 	}
-	return System::Void();
+
+
 	name = "Decompression";
 	state = "huf";
 }
 private: System::Void button10_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	input = xmlMinifier(input);
+	input = newLinesinString(input);
+	System::String^ output = msclr::interop::marshal_as<String^>(input);
+	textBox2->Text = output;
+
 	name = "Minifying";
 	state = "xml";
 
 }
 private: System::Void button11_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+	System::String^ output = msclr::interop::marshal_as<String^>(globalOperation.UNDO());
+	//if (output != "NOT FOUND")
+	textBox2->Text = output;
 
 }
-private: System::Void textBox2_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+public: System::Void textBox2_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+	std::string input = msclr::interop::marshal_as<std::string>(textBox2->Text);
+	if (input != "NOT FOUND")
+	globalOperation.addOperation(input);
+
+//	System::String^ outputu = msclr::interop::marshal_as<String^>(globalOperation.UNDO());
+
+	//if (outputu != "NOT FOUND")
 }
 private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
 	MyForm1 obj;
 	obj.ShowDialog();
+}
+private: System::Void button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
+	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	input = correctXML(input);
+	input = newLinesinString(input);
+	System::String^ output = msclr::interop::marshal_as<String^>(input);
+	textBox2->Text = output;
+
+	//corr
+}
+private: System::Void button12_Click(System::Object^ sender, System::EventArgs^ e) {
+	//Operation op;
+	System::String^ output = msclr::interop::marshal_as<String^>(globalOperation.REDO());
+	//if (output != "NOT FOUND")
+	textBox2->Text = output;
+	
 }
 };
 }

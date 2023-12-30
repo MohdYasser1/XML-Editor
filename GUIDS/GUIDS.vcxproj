@@ -125,7 +125,6 @@
     <ClCompile Include="MyForm1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="json.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

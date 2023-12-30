@@ -70,7 +70,7 @@ namespace GUIDS {
 			// button1
 			// 
 			this->button1->Location = System::Drawing::Point(4, 4);
-			this->button1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->button1->Margin = System::Windows::Forms::Padding(4);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(203, 28);
 			this->button1->TabIndex = 0;
@@ -80,7 +80,7 @@ namespace GUIDS {
 			// button2
 			// 
 			this->button2->Location = System::Drawing::Point(4, 39);
-			this->button2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->button2->Margin = System::Windows::Forms::Padding(4);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(203, 28);
 			this->button2->TabIndex = 1;
@@ -90,7 +90,7 @@ namespace GUIDS {
 			// button3
 			// 
 			this->button3->Location = System::Drawing::Point(215, 4);
-			this->button3->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->button3->Margin = System::Windows::Forms::Padding(4);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(203, 28);
 			this->button3->TabIndex = 2;
@@ -104,7 +104,7 @@ namespace GUIDS {
 			this->textBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->textBox1->Cursor = System::Windows::Forms::Cursors::No;
 			this->textBox1->Location = System::Drawing::Point(789, 43);
-			this->textBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->textBox1->Margin = System::Windows::Forms::Padding(4);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(268, 24);
@@ -120,7 +120,7 @@ namespace GUIDS {
 			this->panel1->Controls->Add(this->button3);
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->panel1->Margin = System::Windows::Forms::Padding(4);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1095, 113);
 			this->panel1->TabIndex = 4;
@@ -143,7 +143,7 @@ namespace GUIDS {
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->textBox2->Location = System::Drawing::Point(20, 135);
-			this->textBox2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->textBox2->Margin = System::Windows::Forms::Padding(4);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Both;
@@ -157,9 +157,9 @@ namespace GUIDS {
 			this->ClientSize = System::Drawing::Size(1095, 736);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->panel1);
-			this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->Margin = System::Windows::Forms::Padding(4);
 			this->Name = L"MyForm1";
-			this->Text = L"MyForm1";
+			this->Text = L"Graph";
 			this->Load += gcnew System::EventHandler(this, &MyForm1::MyForm1_Load);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();

@@ -26,6 +26,7 @@ string keyCompression(string file){
     for(int i = 1; i < file_length; i++){
         bool found = false; // A flag to check if there is a dublicate of the field name
         // Find begining of field name
+        file_length = file.length();
         if(file[i] == '"' && file[i+1] == ':'){
             // Find word length
             int j = i-1;
