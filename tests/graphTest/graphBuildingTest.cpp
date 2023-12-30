@@ -75,4 +75,5 @@ int main(void){
         cout << "User" << follwers1[i] << endl;
     }
 
+    GraphViz(SN);
 }
