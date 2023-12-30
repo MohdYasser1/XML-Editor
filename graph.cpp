@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "parsingXml.cpp"
 using namespace std;
 
@@ -45,6 +46,9 @@ public:
         }  
         return following; 
     }
+    int getNumVertices(){
+        return numVertices;
+    } 
 };
 
 class User {
@@ -93,4 +97,23 @@ Graph buildGraph(string XMLcontent){
         }
     }
     return SocialNetwork;
+}
+
+void GraphViz (Graph SN){
+    string fileContents = "digraph Network {\n\n";
+    for (int i = 0; i < SN.getNumVertices(); i++)
+    {
+        fileContents += to_string(i+1) + " -> {";
+        vector <int> followers = SN.getFollower(i+1);
+        for (int j = 0; j < followers.size()-1; j++)
+        {
+            fileContents += to_string(followers[j]) + " ,";
+        }
+        fileContents += to_string(followers[followers.size()-1]) + "}\n";
+    }
+    fileContents += "}";
+    ofstream GraphVizFile("Network.dot");
+    GraphVizFile << fileContents;
+    GraphVizFile.close();
+    system("dot -Tpng -O Network.dot");
 }
