@@ -1,27 +1,24 @@
-#include <iostream>
-#include <string>
-#include <stack>
-#include <vector>
-#include <fstream>
-#include <utility>
-#include <sstream>
-#include <algorithm>
+
+#include "consistency_check.h"
 
 using namespace std;
 
-// Class to represent labels (tags) in XML
-class XMLLabel {
-public:
-    int lineNumber;         // Line number where the label is found
-    int insertionPosition;  // Position in the line where the label should be inserted
-    std::string name;       // The label itself
-
-public:
-    XMLLabel(std::string n, int line, int pos);
-};
-
 // Constructor for XMLLabel class
 XMLLabel::XMLLabel(std::string n, int line, int pos) : name(n), lineNumber(line), insertionPosition(pos) {}
+
+
+std::vector<std::string> splitString(const std::string& input) {
+    std::vector<std::string> result;
+    std::istringstream iss(input);
+
+    std::string line;
+    while (std::getline(iss, line)) {
+        result.push_back(line);
+    }
+
+    return result;
+}
+
 
 // Function to mark error lines in the XML content
 string markErrorLines(const string& xmlContent, const vector<pair<int, string>>& errorsFound) {
@@ -46,12 +43,13 @@ string markErrorLines(const string& xmlContent, const vector<pair<int, string>>&
 
 // Function to check XML content and capture errors
 string checkXML(const string& xmlContent) {
+
     int currentLine = 0;
     int totalLines = count(xmlContent.begin(), xmlContent.end(), '\n') + 1;
     std::stack<XMLLabel> labelStack;
     vector<pair<int, string>> errorsFound;
 
-    stringstream checkedXmlContent(xmlContent);
+    stringstream checkedXmlContent(xmlPrettifier(xmlMinifier(xmlContent)));
 
     // Loop through each line of the XML content
     string currentLineContent;
@@ -139,22 +137,28 @@ string checkXML(const string& xmlContent) {
         tempLabel = "</" + tempLabel;
         errorsFound.push_back({currentLine, "Closing tag is not found " + tempLabel});
     }
+    if(errorsFound.empty()){
+        return "The XML file is Consistent";
+    }
+    else{
+            return markErrorLines(xmlPrettifier(xmlMinifier(xmlContent)), errorsFound);
+    }
 
-    return markErrorLines(xmlContent, errorsFound);
+
 }
 
 // Function to correct XML content
 std::string correctXML(const std::string& xmlContent) {
+    vector<string> correctedXmlContent = splitString(xmlPrettifier(xmlMinifier(xmlContent)));
     int currentLine = 0;
-    int totalLines = 1; // Since we're working with a single string
+    int totalLines = correctedXmlContent.size();
     std::stack<XMLLabel> labelStack;
 
-    // Convert the input string to a vector of strings
-    std::vector<std::string> correctedXmlContent = {xmlContent};
+
 
     // Loop through each line of the XML file
     while (currentLine < totalLines) {
-        std::string& currentLineContent = correctedXmlContent[currentLine];
+        std::string currentLineContent = correctedXmlContent[currentLine];
         int currentCharIndex = 0;
 
         // Loop through each character in the line
@@ -253,6 +257,7 @@ std::string correctXML(const std::string& xmlContent) {
 
     return result;
 }
+
 
 
 
