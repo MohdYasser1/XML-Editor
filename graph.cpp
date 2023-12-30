@@ -51,10 +51,11 @@ public:
         }
         return following;
     }
-    int getNumVertices(){
+    int getNumVertices()
+    {
         return numVertices;
-    } 
-    int getMostInfluencerUser(Graph &graph)
+    }
+    int getMostInfluencerUser(Graph graph)
     {
         int maxFollowers = 0;
         int mostInfluencerUserId = 0;
@@ -69,7 +70,7 @@ public:
         }
         return mostInfluencerUserId;
     }
-    int getMostActiveUser(Graph &graph)
+    int getMostActiveUser(Graph graph)
     {
         int maxTotal = 0;
         int mostActiveUserId = 0;
@@ -78,9 +79,12 @@ public:
             int followingNum = graph.getFollowing(i).size();
             int followersNum = graph.getFollower(i).size();
             int totalNum = followingNum + followersNum;
-            for(int followers:graph.getFollower(i)){
-                for(int following:graph.getFollowing(i)){
-                    if(followers==following){
+            for (int followers : graph.getFollower(i))
+            {
+                for (int following : graph.getFollowing(i))
+                {
+                    if (followers == following)
+                    {
                         totalNum--;
                     }
                 }
@@ -131,31 +135,32 @@ public:
             for (int i = 0; i < followersOfFollower.size(); ++i)
             {
                 int suggestedUser = followersOfFollower[i];
+                if(suggestedUser!=userId){
+                    bool dub=false;
+                    for(int dubFollower:followers){
+                        if(suggestedUser==dubFollower){
+                            dub=true;
+                            break;
+                        }
 
-                bool isAlreadySuggested = false;
-                for (int j = 0; j < suggestedUsers.size(); ++j)
-                {
-                    if (suggestedUser == suggestedUsers[j] || suggestedUser == userId)
-                    {
-                        isAlreadySuggested = true;
-                        break;
                     }
-                }
 
-                if (!isAlreadySuggested)
-                {
-                    suggestedUsers.push_back(suggestedUser);
+                    if(!dub){
+                        for(int dubFollower:suggestedUsers){
+                            if(suggestedUser==dubFollower){
+                                dub=true;
+                                break;
+                            }
+                        }
+                    }
+                    if(!dub) suggestedUsers.push_back(suggestedUser);
                 }
             }
         }
-
         return suggestedUsers;
     }
-    
+
 };
-
-
-
 
 
 
@@ -200,8 +205,9 @@ void followers_list(Node *node, std::vector<User> &users)
     }
 }
 
-Graph buildGraph(string XMLcontent){
-    Node* node = parseXML(XMLcontent);
+Graph buildGraph(string XMLcontent)
+{
+    Node *node = parseXML(XMLcontent);
     vector<User> users;
 
     followers_list(node, users);
@@ -218,17 +224,18 @@ Graph buildGraph(string XMLcontent){
     return SocialNetwork;
 }
 
-void GraphViz (Graph SN){
+void GraphViz(Graph SN)
+{
     string fileContents = "digraph Network {\n\n";
     for (int i = 0; i < SN.getNumVertices(); i++)
     {
-        fileContents += to_string(i+1) + " -> {";
-        vector <int> followers = SN.getFollower(i+1);
-        for (int j = 0; j < followers.size()-1; j++)
+        fileContents += to_string(i + 1) + " -> {";
+        vector<int> followers = SN.getFollower(i + 1);
+        for (int j = 0; j < followers.size() - 1; j++)
         {
             fileContents += to_string(followers[j]) + " ,";
         }
-        fileContents += to_string(followers[followers.size()-1]) + "}\n";
+        fileContents += to_string(followers[followers.size() - 1]) + "}\n";
     }
     fileContents += "}";
     ofstream GraphVizFile("Network.dot");
