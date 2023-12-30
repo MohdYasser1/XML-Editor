@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "parsingXml.h"
+#include "parsingXml.cpp"
 using namespace std;
 
 class Graph {
@@ -75,4 +75,22 @@ void followers_list(Node* node, std::vector<User>& users) {
         }
         users.push_back(user);
     }
+}
+
+Graph buildGraph(string XMLcontent){
+    Node* node = parseXML(XMLcontent);
+    vector<User> users;
+
+    followers_list(node, users);
+
+    Graph SocialNetwork(users.size());
+
+    for (int i = 0; i < users.size(); i++)
+    {
+        for (int j = 0; j < users[i].followers.size(); j++)
+        {
+            SocialNetwork.follow(users[i].id, users[i].followers[j]);
+        }
+    }
+    return SocialNetwork;
 }
