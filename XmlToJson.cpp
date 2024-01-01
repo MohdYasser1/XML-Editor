@@ -1,47 +1,74 @@
 #include "XmlToJson.h"
 
 
-std::string jsonFormat(const Node* node, int level) {
+std::string jsonFormat(const Node* node, int level, int& flag) {
     std::string result;
-  std::string indent(level, '   ');
-    if (!node->getChildren().empty()) {
+    std::string indent(level, ' ');
+    
+    if (flag==true)  {      
+    result += indent + "\"" + node->getTagName() + "\" :  ";
+    }
+    
+ if (node->getChildren().size() == 0) {
+       flag = true;
+       //result+=indent;
+        result += "\"" + node->getTagValue() + "\" , ";
+        
+    
+    } else if (node->getChildren().size() == 1) {
+       
+        result+="{\n";
+        const Node* child = node->getChildren()[0];
+        flag = true;
+        result += indent+jsonFormat(child, level + 1, flag);
+       result+="\n"+ indent+ "},";
+    
+    }
+    else {
+        if(node->getChildren().size()>1){
         bool hasSameTagName = false;
         for (size_t i = 1; i < node->getChildren().size(); ++i) {
             if (node->getChildren()[i]->getTagName() == node->getChildren()[0]->getTagName()) {
                 hasSameTagName = true;
+
+                result += "{\n";
+                result += indent+" \"" + node->getChildren()[0]->getTagName() + "\" : ";
+                result += "[\n";
+                flag = false;
                 break;
             }
         }
 
-        result += indent + "\"" + node->getTagName() + "\" : ";
         if (hasSameTagName) {
-            result += "[\n";
+            
             for (size_t i = 0; i < node->getChildren().size(); ++i) {
                 if (i != 0) {
                     result += "\n";
                 }
 
                 const Node* child = node->getChildren()[i];
-                result += jsonFormat(child, level + 1);
+                flag=false;
+                result +=indent+ jsonFormat(child, level + 1, flag);
             }
-            result += "\n" + indent + "]";
+       
+            result += "\n" + indent + " ]";
+             result += indent+"\n }";
         } else {
-            result += "{\n";
+         result += "{\n";
+          
             for (size_t i = 0; i < node->getChildren().size(); ++i) {
                 if (i != 0) {
                     result += "\n";
                 }
 
                 const Node* child = node->getChildren()[i];
-                result += jsonFormat(child, level + 1);
+                flag = true;
+                result +=indent+ jsonFormat(child, level + 1, flag);
             }
             result += "\n" + indent + "}";
         }
-    } else {
-        result +=indent + "\"" + node->getTagName() + "\" : ";
-        result += "\"" + node->getTagValue() + "\" , ";
     }
-
+    }
     return result;
 }
 std::string print_json(const Node* node, int level ) {
@@ -132,6 +159,6 @@ string XML_2_Json(string XMLcontent){
    std::cout << jsonString << std::endl;
  
     // Clean up memory (Implement a function to delete the XML tree nodes)
-
+  delete root;
     return 0;
 }*/
