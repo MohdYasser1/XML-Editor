@@ -142,13 +142,13 @@ std::string jsonFormat(const Node* node, int level, int& flag) {
     }
     return result;
 }
-std::string print_json(const Node* node, int level ) {
+std::string print_json(const Node* node, int level = 0) {
     std::string json = "{\n";
-    json += jsonFormat(node, level);
+    int flag = 1; // added a flag variable
+    json += jsonFormat(node, level, flag);
     json += "\n}\n";
     return json;
 }
-
 string XML_2_Json(string XMLcontent){
     Node* root = parseXML(XMLcontent);
     string jsonString = print_json(root, 0);
@@ -226,7 +226,7 @@ string XML_2_Json(string XMLcontent){
     // Parse XML
     Node* root = parseXML(xmlData);
 
-  std::string jsonString = print_json(root);
+   std::string jsonString = print_json(root);
    std::cout << jsonString << std::endl;
  
     // Clean up memory (Implement a function to delete the XML tree nodes)
