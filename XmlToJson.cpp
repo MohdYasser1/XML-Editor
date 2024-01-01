@@ -1,5 +1,76 @@
 #include "XmlToJson.h"
 
+Node* parseXML(const std::string& xml) {
+    Node* root = nullptr;
+    Node* currentNode = nullptr;
+    string currentText;
+    istringstream iss(xml);
+
+    string line;
+    while (std::getline(iss, line)) {
+        if (line.find('<') != std::string::npos) {
+            string tagName = extractTagName(line);
+            if (tagName[0] == '/') {
+                currentNode->setTagValue(currentText);
+                currentNode = currentNode->getParent();
+            } else {
+                if (line.find("</") != std::string::npos) {
+                    string tagValue = extractTagValue(line, tagName);
+                    Node* newNode = new Node(tagName, tagValue);
+                    if (currentNode != nullptr) {
+                        currentNode->addChild(newNode);
+                    } else {
+                        root = newNode;
+                    }
+                } else {
+                    if (line.find('>') != std::string::npos) {
+                        std::string tagValue = extractTagValue(line, tagName);
+                        Node* newNode = new Node(tagName, tagValue);
+                        newNode->setParent(currentNode);
+                        if (currentNode != nullptr) {
+                            currentNode->addChild(newNode);
+                        } else {
+                            root = newNode;
+                        }
+                        currentNode = newNode;
+                    } else {
+                        Node* newNode = new Node(tagName);
+                        newNode->setParent(currentNode);
+                        if (currentNode != nullptr) {
+                            currentNode->addChild(newNode);
+                        } else {
+                            root = newNode;
+                        }
+                        currentNode = newNode;
+                    }
+                }
+            }
+            currentText.clear();
+        } else {
+            currentText += line;
+        }
+    }
+
+    return root;
+}
+
+std::string extractTagName(const std::string& line) {
+    std::regex pattern("<(.*?)>");
+    std::smatch matcher;
+    if (std::regex_search(line, matcher, pattern)) {
+        return matcher[1];
+    }
+    return "";
+}
+
+string extractTagValue(const std::string& line, const std::string& tagName) {
+    std::regex pattern("<" + tagName + ">(.*?)<\\/" + tagName + ">");
+    std::smatch matcher;
+    if (std::regex_search(line, matcher, pattern)) {
+        return matcher[1];
+    }
+    return "";
+}
 
 std::string jsonFormat(const Node* node, int level, int& flag) {
     std::string result;
