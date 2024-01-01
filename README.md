@@ -26,7 +26,9 @@ The xmlMinifier function employs the remove-erase idiom to eliminate unnecessary
 ### Inserting xml to Tree:
 
 ### Converting xml to json:
-
+The function recursively traverses the XML tree structure and builds a JSON-formatted string.It takes a Node pointer and an integer level as parameters.
+The indentation for formatting is calculated based on the level parameter.If a node has children, it checks if they have the same tag name. If yes, it formats them as an array; otherwise, it formats them as an object.The result is built by appending key-value pairs or array elements to the string.then print_json Function:
+This function wraps the output of jsonFormat in curly braces to create a complete JSON object.It takes a Node pointer and an integer level as parameters.
 ### Compressing the Data:
 1. Key-Compression logic
 2. Huffman encoding for long strings
