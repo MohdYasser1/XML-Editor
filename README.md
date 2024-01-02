@@ -24,11 +24,21 @@ The xmlPrettifier function utilizes a line-by-line approach to analyze the input
 The xmlMinifier function employs the remove-erase idiom to eliminate unnecessary whitespace from the input XML string. It traverses the string, identifying and removing spaces, tabs, and line breaks, except for newline characters essential for maintaining structure. This results in a minified XML string suitable for more compact representation and reduced file size.
 
 ### Inserting xml to Tree:
+Function parseXML:
 
+The function takes an XML string (xml) as input and returns a pointer to the root of the XML tree (Node*).It initializes pointers for the root (root) and the current node being processed (currentNode).The XML string is processed line by line using an istringstream.If a line contains a '<' character, it is considered a potential XML tag.If the tag starts with '/', it indicates the end of an element, and the tag value is set for the current node, and the current node is set to its parent.
+If the line contains "</", it signifies the end of an element with a closing tag. A new node is created, and it is either added as a child to the current node or set as the root if there is no current node.If the line contains '>', it indicates the start of an element. A new node is created, its parent is set to the current node, and it is added as a child to the current node. The current node is then updated to the newly created node.
+If none of the above conditions are met, it implies the start of a new element without a closing tag on the same line. A new node is created similarly to the case with '>', and the current node is updated.The function returns the root of the constructed XML tree.
+
+Function extractTagName:
+This function extracts the tag name from an XML line using a regular expression.It searches for the pattern <anything> and returns the content inside the brackets.
+
+Function extractTagValue:
+This function extracts the tag value for a given tag name from an XML line using a regular expression.It searches for the pattern <tagName>anything</tagName> and returns the content between the opening and closing tags.
+
+Note: The code assumes that the XML is well-formed, and there is no error handling for cases where the XML might be invalid.
 ### Converting xml to json:
-The function recursively traverses the XML tree structure and builds a JSON-formatted string.It takes a Node pointer and an integer level as parameters.
-The indentation for formatting is calculated based on the level parameter.If a node has children, it checks if they have the same tag name. If yes, it formats them as an array; otherwise, it formats them as an object.The result is built by appending key-value pairs or array elements to the string.then print_json Function:
-This function wraps the output of jsonFormat in curly braces to create a complete JSON object.It takes a Node pointer and an integer level as parameters.
+
 ### Compressing the Data:
 1. Key-Compression logic
 2. Huffman encoding for long strings
