@@ -38,7 +38,9 @@ This function extracts the tag value for a given tag name from an XML line using
 
 Note: The code assumes that the XML is well-formed, and there is no error handling for cases where the XML might be invalid.
 ### Converting xml to json:
-
+Function jsonFormat:
+It takes three parameters: a pointer to a Node (node), an integer level indicating the current indentation level, and a reference to an integer flag.The function recursively processes the XML-like tree and builds a JSON-formatted string.It starts by checking if the flag is true (which indicates whether it's the first element at a particular level). If true, it adds the JSON key with the tag name.If the node has no children, it adds the JSON value corresponding to the tag value.
+If the node has a single child, it opens a JSON object, recursively processes the child, and closes the object.If the node has multiple children, it checks if any children have the same tag name. If yes, it assumes an array structure and organizes the children accordingly. If no common tag name is found, it treats the children as separate objects.then the print_json function print the json string between curly brackets.
 ### Compressing the Data:
 1. Key-Compression logic
 2. Huffman encoding for long strings
