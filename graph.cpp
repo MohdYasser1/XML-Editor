@@ -242,4 +242,5 @@ void GraphViz(Graph SN)
     GraphVizFile << fileContents;
     GraphVizFile.close();
     system("dot -Tpng -O Network.dot");
+    system("Network.dot.png");
 }

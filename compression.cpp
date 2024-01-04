@@ -17,7 +17,7 @@ void compress(string file){
 
     string compressedFile;
     //XML to minified JSON
-    compressedFile = jsonMinifier(XML_2_Json(file));
+    compressedFile = jsonMinifier(XML_2_JsonOLD(file));
 
     //Key-Compression
     compressedFile = keyCompression(compressedFile);

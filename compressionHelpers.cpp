@@ -137,3 +137,74 @@ string huffmanDecoding(string file_name){
     h.recreate_huffman_tree();
     return h.decoding_save();
 }
+
+
+//OLD XML 2 JSON Functions
+class SString {
+public:
+    static vector<string> stringToList(string str, char sep = ' ', bool greedy = true);
+ 
+    static string insert_taps(int level);
+};
+string insert_tapsOLD(int level) {
+    string taps = "";
+    for (int i = 0; i < level; i++) {
+        taps += "\t";
+    }
+    return taps;
+}
+std::string jsonFormatOLD(const Node* node, int level) {
+    std::string result;
+
+    if (!node->getChildren().empty()) {
+        bool hasSameTagName = false;
+        for (size_t i = 1; i < node->getChildren().size(); ++i) {
+            if (node->getChildren()[i]->getTagName() == node->getChildren()[0]->getTagName()) {
+                hasSameTagName = true;
+                break;
+            }
+        }
+
+        result += insert_tapsOLD(level) + "\"" + node->getTagName() + "\" : ";
+        if (hasSameTagName) {
+            result += "[\n";
+            for (size_t i = 0; i < node->getChildren().size(); ++i) {
+                if (i != 0) {
+                    result += "\n";
+                }
+
+                const Node* child = node->getChildren()[i];
+                result += jsonFormatOLD(child, level + 1);
+            }
+            result += "\n" + insert_tapsOLD(level) + "]";
+        } else {
+            result += "{\n";
+            for (size_t i = 0; i < node->getChildren().size(); ++i) {
+                if (i != 0) {
+                    result += "\n";
+                }
+
+                const Node* child = node->getChildren()[i];
+                result += jsonFormatOLD(child, level + 1);
+            }
+            result += "\n" + insert_tapsOLD(level) + "}";
+        }
+    } else {
+        result += insert_tapsOLD(level) + "\"" + node->getTagName() + "\" : ";
+        result += "\"" + node->getTagValue() + "\" , ";
+    }
+
+    return result;
+}
+std::string print_jsonOLD(const Node* node, int level ) {
+    std::string json = "{\n";
+    json += jsonFormatOLD(node, level);
+    json += "\n}\n";
+    return json;
+}
+
+string XML_2_JsonOLD(string XMLcontent){
+    Node* root = parseXML(XMLcontent);
+    string jsonString = print_jsonOLD(root, 0);
+    return jsonString;
+}
