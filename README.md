@@ -83,7 +83,7 @@ Make sure not to modify or delete any essential files in this directory to ensur
 ### Network Analysis:
 
 ### Graph:
-## Network Visualization:
+#### Network Visualization:
 This feature allows you to visualize your network in a graph structure.
 ![GraphViz Example](images/Network.dot.png)  
 **NOTE** Make sure you have [GraphViz](https://graphviz.org/download/) downloaded and correctly added to PATH to be able to use this feature.
