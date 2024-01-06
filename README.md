@@ -42,11 +42,21 @@ Function jsonFormat:
 It takes three parameters: a pointer to a Node (node), an integer level indicating the current indentation level, and a reference to an integer flag.The function recursively processes the XML-like tree and builds a JSON-formatted string.It starts by checking if the flag is true (which indicates whether it's the first element at a particular level). If true, it adds the JSON key with the tag name.If the node has no children, it adds the JSON value corresponding to the tag value.
 If the node has a single child, it opens a JSON object, recursively processes the child, and closes the object.If the node has multiple children, it checks if any children have the same tag name. If yes, it assumes an array structure and organizes the children accordingly. If no common tag name is found, it treats the children as separate objects.then the print_json function print the json string between curly brackets.
 ### Compressing the Data:
-1. Key-Compression logic
-2. Huffman encoding for long strings
+This feature aims to reduce the size of the XML file and store in a compacted .huf file.  
+This compression technique follows a three-step process:
+1. **XML to JSON Minified:** Converts the XML into JSON formart and minifies it using a special JSON minifier to remove whitespaces.
+2.  **Key Compression:** All object keys are replaced with index of array stored at the end of the file. The More same key appears in the original JSON, the more better compression.
+This technique is influenced by a technique used in the famous compressed-json package. [Compressed-json package](https://www.npmjs.com/package/compressed-json)
+3. **Huffman Encodeing:** The previous 2 processes helped to reduce the XML format and field names, Huffman Encoding aimed to reduce the size taken by large texts in Tag values. This is a straight implementation of [Huffman Coding](https://en.wikipedia.org/wiki/Huffman_coding).
+
+**Results:** When this compression techniques is applied on a small 2.78KB XML file it manages to reduce its size by approx. **54%**.
+![Compression Example](images/Compression_size_comparison.png)
 
 ### Decompressing:
-
+This feature just reverses the compression process by performing the following steps:  
+1. **Huffman Decoding:** Retrieves the Huffman-encoded data.
+2. **Key Decompression:** Reverts the compressed field names to their original form within the JSON structure.
+3. **JSON to XML Conversion:** Converts the JSON content back to XML format.
 ## File Storage
 
 ### Saved Files Location
