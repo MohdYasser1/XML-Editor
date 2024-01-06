@@ -229,13 +229,21 @@ void GraphViz(Graph SN)
     string fileContents = "digraph Network {\n\n";
     for (int i = 0; i < SN.getNumVertices(); i++)
     {
-        fileContents += to_string(i + 1) + " -> {";
         vector<int> followers = SN.getFollower(i + 1);
-        for (int j = 0; j < followers.size() - 1; j++)
+        if (followers.size() > 0)
         {
-            fileContents += to_string(followers[j]) + " ,";
+            fileContents += to_string(i + 1) + " -> {";
         }
-        fileContents += to_string(followers[followers.size() - 1]) + "}\n";
+        
+
+
+        for (int j = 1; j < followers.size(); j++)
+        {
+            fileContents += to_string(followers[j-1]) + " ,";
+        }
+        if (followers.size() > 0){
+            fileContents += to_string(followers[followers.size() - 1]) + "}\n";
+        }
     }
     fileContents += "}";
     ofstream GraphVizFile("Network.dot");

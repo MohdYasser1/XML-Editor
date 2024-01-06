@@ -60,4 +60,5 @@ int main(void){
         text += ("User" + to_string(mutual[i]) + "\r\n");
     }
     cout<<text<<endl;
+    GraphViz(SN);
 }
