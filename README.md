@@ -85,7 +85,7 @@ Make sure not to modify or delete any essential files in this directory to ensur
 ### Graph:
 ## Network Visualization:
 This feature allows you to visualize your network in a graph structure.
-[GraphViz Example](images/Network.dot.png)
+![GraphViz Example](images/Network.dot.png)
 **NOTE** Make sure you have [GraphViz](https://graphviz.org/download/) downloaded and correctly added to PATH to be able to use this feature.
 ### Undo/Redo operations:
 The program introduces Undo and Redo operations to enhance user flexibility. Users can easily revert to a previous state (Undo) or reapply operations (Redo), providing a dynamic and interactive experience.
