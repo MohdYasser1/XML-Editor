@@ -3,22 +3,24 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include "ParsingXml.cpp"
 
-struct Node {
-    std::string TagName;
-    std::string TagValue;
-    std::vector<Node*> children;
-};
+// struct Node {
+//     std::string TagName;
+//     std::string TagValue;
+//     std::vector<Node*> children;
+// };
 
-class SocialNetwork {
-public:
-    void pushPostsIntoVector(Node* root);
-    std::string searchPosts(const std::string& key);
+// class SocialNetwork {
+// public:
+//     void pushPostsIntoVector(Node* root);
+//     std::string searchPosts(const std::string& key);
 
-private:
-    std::vector<Node*> posts;
+// private:
+//     std::vector<Node*> posts;
 
-    std::string getPostBody(Node* postNode);
-};
+//     std::string getPostBody(Node* postNode);
+// };
 
 #endif  // SOCIAL_NETWORK_H

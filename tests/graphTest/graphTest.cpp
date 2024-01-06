@@ -55,5 +55,9 @@ int main(void){
         cout<<suggest1[i]<<endl;
     }
 
-
+    string text = "Mutual Followers:\r\n";
+    for(int i = 0; i < mutual.size(); i++){
+        text += ("User" + to_string(mutual[i]) + "\r\n");
+    }
+    cout<<text<<endl;
 }
