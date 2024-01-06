@@ -49,7 +49,7 @@ This compression technique follows a three-step process:
 This technique is influenced by a technique used in the famous compressed-json package. [Compressed-json package](https://www.npmjs.com/package/compressed-json)
 3. **Huffman Encodeing:** The previous 2 processes helped to reduce the XML format and field names, Huffman Encoding aimed to reduce the size taken by large texts in Tag values. This is a straight implementation of [Huffman Coding](https://en.wikipedia.org/wiki/Huffman_coding).
 
-**Results:** When this compression techniques is applied on a small 2.78KB XML file it manages to reduce its size by approx. **54%**.
+**Results:** When this compression technique is applied on a small 2.78KB XML file it manages to reduce its size by approx. **46%**.
 ![Compression Example](images/Compression_size_comparison.png)
 
 ### Decompressing:
