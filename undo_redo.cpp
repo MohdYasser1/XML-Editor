@@ -35,36 +35,10 @@ public:
             string stacktop = redo.top();
             undo.push(stacktop);
             redo.pop();
+
             return stacktop;
         }
     }
 
 };
-
-
-int main() {
-    Operation operation;
-
-    // Add some operations
-    operation.addOperation("Operation 1");
-    operation.addOperation("Operation 2");
-    operation.addOperation("Operation 3");
-
-    // Undo operations
-    cout << operation.UNDO() << endl;  // Undo successful: Operation 3
-    cout << operation.UNDO() << endl;  // Undo successful: Operation 2
-    cout << operation.UNDO() << endl;  // Undo successful: Operation 1
-
-
-    // Redo operations
-    cout << operation.REDO() << endl;  // Redo successful: Operation 2
-    cout << operation.REDO() << endl;  // Redo successful: Operation 3
-
-    // Try to undo when there are no more operations
-    cout << operation.REDO() << endl;  // There are no operations to undo
-
-    std::cout << std::endl;
-
-    return 0;
-}
-
+Operation globalOperation;
