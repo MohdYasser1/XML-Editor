@@ -1,16 +1,18 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include "parsingXml.cpp"
+//#include "parsingXml.cpp"
 using namespace std;
 
 class Graph
 {
+public: string text;
 private:
     vector<vector<int>> adjacencyMatrix;
     int numVertices;
 
 public:
+    Graph(){}
     // Constructor to initialize the graph with a specific number of vertices
     Graph(int n)
     {
@@ -135,25 +137,25 @@ public:
             for (int i = 0; i < followersOfFollower.size(); ++i)
             {
                 int suggestedUser = followersOfFollower[i];
-                if(suggestedUser!=userId){
-                    bool dub=false;
-                    for(int dubFollower:followers){
-                        if(suggestedUser==dubFollower){
-                            dub=true;
+                if (suggestedUser != userId) {
+                    bool dub = false;
+                    for (int dubFollower : followers) {
+                        if (suggestedUser == dubFollower) {
+                            dub = true;
                             break;
                         }
 
                     }
 
-                    if(!dub){
-                        for(int dubFollower:suggestedUsers){
-                            if(suggestedUser==dubFollower){
-                                dub=true;
+                    if (!dub) {
+                        for (int dubFollower : suggestedUsers) {
+                            if (suggestedUser == dubFollower) {
+                                dub = true;
                                 break;
                             }
                         }
                     }
-                    if(!dub) suggestedUsers.push_back(suggestedUser);
+                    if (!dub) suggestedUsers.push_back(suggestedUser);
                 }
             }
         }
@@ -177,12 +179,12 @@ public:
     }
 };
 
-void followers_list(Node *node, std::vector<User> &users)
+void followers_list(Node* node, std::vector<User>& users)
 {
-    for (const auto &userNode : node->getChildren())
+    for (const auto& userNode : node->getChildren())
     {
         User user;
-        for (const auto &userAttr : userNode->getChildren())
+        for (const auto& userAttr : userNode->getChildren())
         {
             if (userAttr->getTagName() == "id")
             {
@@ -194,9 +196,9 @@ void followers_list(Node *node, std::vector<User> &users)
             }
             else if (userAttr->getTagName() == "followers")
             {
-                for (const auto &follower : userAttr->getChildren())
+                for (const auto& follower : userAttr->getChildren())
                 {
-                    const auto &followerIdNode = follower->getChildren()[0];
+                    const auto& followerIdNode = follower->getChildren()[0];
                     user.addFollower(std::stoi(followerIdNode->getTagValue()));
                 }
             }
@@ -207,13 +209,14 @@ void followers_list(Node *node, std::vector<User> &users)
 
 Graph buildGraph(string XMLcontent)
 {
-    Node *node = parseXML(XMLcontent);
+
+    Node* node = parseXML(XMLcontent);
     vector<User> users;
 
     followers_list(node, users);
 
     Graph SocialNetwork(users.size());
-
+    SocialNetwork.text = XMLcontent; 
     for (int i = 0; i < users.size(); i++)
     {
         for (int j = 0; j < users[i].followers.size(); j++)
@@ -234,14 +237,14 @@ void GraphViz(Graph SN)
         {
             fileContents += to_string(i + 1) + " -> {";
         }
-        
+
 
 
         for (int j = 1; j < followers.size(); j++)
         {
-            fileContents += to_string(followers[j-1]) + " ,";
+            fileContents += to_string(followers[j - 1]) + " ,";
         }
-        if (followers.size() > 0){
+        if (followers.size() > 0) {
             fileContents += to_string(followers[followers.size() - 1]) + "}\n";
         }
     }
@@ -252,3 +255,4 @@ void GraphViz(Graph SN)
     system("dot -Tpng -O Network.dot");
     system("Network.dot.png");
 }
+Graph globalGraph; 
