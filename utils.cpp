@@ -91,6 +91,7 @@ string newLinesinString(string input) {
             result += input[i];
         }
     }
+    return result; 
 }
 
 string vector2string(vector<string> text){
