@@ -7,6 +7,133 @@ Brief explanation:
 ## Level 1
 
 ### GUI:
+This code appears to be a C++/CLI Windows Forms application using the .NET framework. It defines a graphical user interface (GUI) window named `MyForm` that allows users to perform various operations on XML and JSON data. Here's a brief description of the GUI components and functionality:
+### XML-Editor Form
+
+![photo_2024-01-07_04-52-21](https://github.com/MohdYasser1/XML-Editor/assets/132142327/1750b19c-ad16-49f2-892d-58891f7b85bf)
+
+### Components:
+1. **Text Boxes:**
+   - `textBox1`: Used for displaying and editing XML content.
+   - `textBox2`: Used for displaying the result of operations on XML content.
+
+2. **Panel:**
+   - Contains buttons for various operations.
+
+3. **Buttons:**
+   - `button1`: Open XML file.
+   - `button2`: Perform error detection on XML.
+   - `button3`: Perform correction on XML.
+   - `button4`: Convert XML to JSON.
+   - `button5`: Prettify XML.
+   - `button6`: Compress XML using Huffman coding.
+   - `button7`: Decompress Huffman-encoded XML.
+   - `button8`: Save result to a file.
+   - `button9`: Open a separate form (`MyForm1`) to perform additional operations.
+   - `button10`: Minify XML.
+   - `button11`: Undo the last operation.
+   - `button12`: Redo the last undone operation.
+
+### Functionality:
+- **File Operations:**
+  - `button1`: Opens a file dialog to load XML content into `textBox1`.
+  - `button8`: Saves the content of `textBox2` to a file.
+
+- **XML Operations:**
+  - `button2`: Performs error detection on XML content in `textBox1`.
+  - `button3`: Performs correction on XML content in `textBox1`.
+  - `button4`: Converts XML content in `textBox1` to JSON.
+  - `button5`: Prettifies XML content in `textBox1`.
+  - `button6`: Compresses XML content in `textBox1` using Huffman coding.
+  - `button7`: Decompresses Huffman-encoded XML content and updates `textBox1`.
+  - `button10`: Minifies XML content in `textBox1`.
+  - `button3`: Corrects XML content in `textBox1`.
+
+- **Undo and Redo Operations:**
+  - `button11`: Undoes the last operation.
+  - `button12`: Redoes the last undone operation.
+
+- **Additional Operations:**
+  - `button9`: Opens a separate form (`MyForm1`) to perform additional operations.
+
+### Notes:
+- The code utilizes the `Operation` class for undo and redo functionality.
+- It includes error detection, correction, conversion between XML and JSON, prettifying, compression, and minification operations.
+
+Please note that some functionality, such as `globalOperation.UNDO()` and `globalOperation.REDO()`, depends on the implementation of the `Operation` class, which is not provided in the code snippet.
+
+
+### Graph Analysis Form 
+![photo_2024-01-07_04-52-19](https://github.com/MohdYasser1/XML-Editor/assets/132142327/43661f5f-72ff-49a7-a76b-2a54463c7a21)
+
+The provided code is a C++/CLI Windows Forms application that creates a GUI window using the Windows Forms library. The application seems to be related to a graph-based analysis of social network data. Here's a brief description of the key components in the provided code:
+
+1. **Header and Includes:**
+   ```cpp
+   #pragma once
+   #include <msclr\marshal_cppstd.h> // to convert std::string to String ^ and vice versa
+   #include "../consistency_check.cpp"
+   #include "../compression.cpp"
+   #include <iostream>
+   #include "../graph.cpp"
+   #include <stdio.h> /* printf, fgets */
+   #include <stdlib.h>
+   #include "../PostSearch.cpp"
+   ```
+
+2. **Namespace and Classes:**
+   ```cpp
+   namespace GUIDS {
+       using namespace System;
+       using namespace System::ComponentModel;
+       using namespace System::Collections;
+       using namespace System::Windows::Forms;
+       using namespace System::Data;
+       using namespace System::Drawing;
+   ```
+
+3. **Main Form Class (MyForm1):**
+   - Constructor that initializes the form.
+   - A secondary constructor that takes a string parameter and performs some initializations based on that data.
+   - Various UI components like buttons, textboxes, labels, etc.
+
+4. **Constructor and UI Initialization:**
+   ```cpp
+   MyForm1(void) {
+       InitializeComponent();
+       // Additional constructor code can be added here.
+   }
+
+   MyForm1(String^ data) {
+       // Initialization using data parameter.
+   }
+   ```
+
+5. **UI Components:**
+   - Buttons (`button1`, `button2`, `button3`, `button4`).
+   - Textboxes (`textBox1`, `textBox2`, `textBox3`, `textBox4`, `textBox5`).
+   - Labels (`label2`, `label3`, `label4`).
+   - Panel (`panel1`) containing various UI elements.
+
+6. **Event Handlers:**
+   - Methods like `button1_Click`, `button2_Click`, `button3_Click`, `button4_Click` are event handlers for button clicks.
+   - `textBox1_TextChanged` and `textBox4_TextChanged` are event handlers for text changes in corresponding textboxes.
+
+7. **Graph Operations:**
+   - The code appears to perform operations on a global graph object (`globalGraph`), which is assumed to be an instance of a graph class.
+
+8. **Graph Visualization:**
+   - There is a button (`button2`) that triggers a graph visualization function (`GraphViz`) with a warning message.
+
+9. **Post Search:**
+   - There is a button (`button4`) that triggers a post search function (`searchPosts`) using some input data.
+
+10. **Miscellaneous:**
+    - The GUI layout is defined using the `InitializeComponent` method.
+    - The code uses `msclr::interop::marshal_as` to convert between C++ `std::string` and .NET `String^` types.
+
+Keep in mind that this is a high-level description, and understanding the exact functionality would require knowledge of the implementations in the associated files (`consistency_check.cpp`, `compression.cpp`, `graph.cpp`, `PostSearch.cpp`).
+
 
 ### Checking xml Consistency:
 The program incorporates a robust XML consistency checking mechanism designed to ensure the correct structure of XML files. Utilizing a stack-based approach, it validates the structure of XML tags, identifying missing or mismatched opening and closing tags. The program not only identifies but also visually highlights errors, providing users with a clear indication of potential issues within their XML documents.
