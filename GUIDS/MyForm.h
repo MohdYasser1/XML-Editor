@@ -3,17 +3,16 @@
 
 #include <iostream>
 #include <msclr\marshal_cppstd.h>//to convert std::string to String ^ and vice versa
-#include <msclr/marshal_cppstd.h>
 //#include "../xmlprettifier.cpp"
 //#include "../xmlminifier.cpp"
 //#include "../json.cpp"
-#include "../consistency_check.cpp"
 //#include "../utils.cpp"
-#include "../xmlminifier.cpp"
+//#include "../xmlminifier.cpp"
 //#include "../xmlprettifier.cpp"
-#include "../compression.cpp"
+//#include "../compression.cpp"
 #include "../undo_redo.cpp"
 //#include "../XmlToJson.cpp"
+
 
 
 
@@ -45,6 +44,7 @@ namespace GUIDS {
 	{
 		String^ name = "XML";
 		String^ state = "xml";
+
 		//
 		//String^ managedString = "Hello, World!";
 		//std::string* nativeString = msclr::interop::marshal_as<std::string*>(managedString);
@@ -276,6 +276,7 @@ namespace GUIDS {
 			resources->ApplyResources(this->textBox2, L"textBox2");
 			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->textBox2->Name = L"textBox2";
+			this->textBox2->ReadOnly = true;
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged_1);
 			// 
 			// MyForm
@@ -417,7 +418,7 @@ private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e
 			input = newLinesinString(input);
 
 			System::String^ output = msclr::interop::marshal_as<String^>(input);
-			textBox2->Text = output;
+			textBox1->Text = output;
 
 
 			// Write complete file path to file path text box
@@ -459,8 +460,17 @@ public: System::Void textBox2_TextChanged_1(System::Object^ sender, System::Even
 	//if (outputu != "NOT FOUND")
 }
 private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
-	MyForm1 obj;
-	obj.ShowDialog();
+	//std::string input = msclr::interop::marshal_as<std::string>();
+	//Graph SN = buildGraph(input);
+	//std::string MostInfluencerUser = to_string(SN.getMostInfluencerUser(SN));
+	//std::string MostActiveUser = to_string(SN.getMostActiveUser(SN));
+	//std::string text = "Most Influencer User: \n\r User" + MostInfluencerUser + "\n\r Most Active User : \n\r User" + MostActiveUser;
+	//System::String^ output = msclr::interop::marshal_as<String^>(text);
+	//MessageBox::Show("output", "Hai!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	MyForm1^ from1 = gcnew MyForm1(textBox1->Text);
+	from1->ShowDialog();
+	//GUIDS::MyForm1::textBox1->Text = output;
+
 }
 private: System::Void button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	std::string input = msclr::interop::marshal_as<std::string>(textBox1->Text);
@@ -468,8 +478,9 @@ private: System::Void button3_Click_1(System::Object^ sender, System::EventArgs^
 	input = newLinesinString(input);
 	System::String^ output = msclr::interop::marshal_as<String^>(input);
 	textBox2->Text = output;
-
-	//corr
+	name = "Correction";
+	state = "xml";
+	
 }
 private: System::Void button12_Click(System::Object^ sender, System::EventArgs^ e) {
 	//Operation op;

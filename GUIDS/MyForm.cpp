@@ -1,4 +1,5 @@
 #include "MyForm.h"
+#include "MyForm1.h"
 
 
 using namespace GUIDS;

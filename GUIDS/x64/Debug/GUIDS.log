@@ -1,43 +1,60 @@
 ﻿  MyForm.cpp
-C:\jan\CSE Senior\XML-Editor\consistency_check.cpp(50,20): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\consistency_check.cpp(48,20): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\consistency_check.cpp(109,35): warning C4101: 'ptr': unreferenced local variable
+C:\jan\CSE Senior\Data\XML-Editor\consistency_check.cpp(107,35): warning C4101: 'ptr': unreferenced local variable
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\consistency_check.cpp(214,35): warning C4101: 'ptr': unreferenced local variable
+C:\jan\CSE Senior\Data\XML-Editor\consistency_check.cpp(154,20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\huffman.cpp(75,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\consistency_check.cpp(218,35): warning C4101: 'ptr': unreferenced local variable
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\huffman.cpp(182,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\XmlToJson.cpp(79,15): warning C4805: '==': unsafe mix of type 'int' and type 'bool' in operation
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\huffman.cpp(206,26): warning C4018: '<': signed/unsigned mismatch
+C:\jan\CSE Senior\Data\XML-Editor\huffman.cpp(75,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(23,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\huffman.cpp(182,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(29,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\huffman.cpp(206,26): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(45,42): warning C4267: '-=': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(23,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(53,38): warning C4267: '-=': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(29,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(87,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(45,42): warning C4267: '-=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
-C:\jan\CSE Senior\XML-Editor\compressionHelpers.cpp(124,43): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(53,38): warning C4267: '-=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(87,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\compressionHelpers.cpp(124,43): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\graph.cpp(66,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\graph.cpp(81,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\graph.cpp(82,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'MyForm.cpp')
+  
+C:\jan\CSE Senior\Data\XML-Editor\graph.cpp(218,35): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'MyForm.cpp')
   
   MyForm1.cpp
-C:\jan\CSE Senior\XML-Editor\GUIDS\MyForm1.cpp(9,1): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
   .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
   Generating Code...
   MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  GUIDS.vcxproj -> C:\jan\CSE Senior\XML-Editor\GUIDS\x64\Debug\GUIDS.exe
+  GUIDS.vcxproj -> C:\jan\CSE Senior\Data\XML-Editor\GUIDS\x64\Debug\GUIDS.exe
