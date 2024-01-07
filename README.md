@@ -208,6 +208,7 @@ Make sure not to modify or delete any essential files in this directory to ensur
 ## Level 2
 
 ### Network Analysis:
+The system conducts network analysis, identifying the most influential and active users. It also determines mutual followers between two users and suggests a list of users to follow, leveraging the followers of followers.
 
 ### Graph:
 #### Network Visualization:
