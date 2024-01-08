@@ -186,6 +186,15 @@ This feature just reverses the compression process by performing the following s
 3. **JSON to XML Conversion:** Converts the JSON content back to XML format.
 ## File Storage
 
+
+### GUI
+
+The GUIDS.exe:
+
+```
+XML-Editor\GUIDS\x64\Debug
+```
+
 ### Saved Files Location
 
 The XML Editor saves files to the following directory:
