@@ -49,7 +49,7 @@ string checkXML(const string& xmlContent) {
     std::stack<XMLLabel> labelStack;
     vector<pair<int, string>> errorsFound;
 
-    stringstream checkedXmlContent(xmlPrettifier(xmlMinifier(xmlContent)));
+    stringstream checkedXmlContent(xmlContent);
 
     // Loop through each line of the XML content
     string currentLineContent;
@@ -72,7 +72,8 @@ string checkXML(const string& xmlContent) {
                     if (!labelStack.empty()) {
                         if (labelName == (labelStack.top()).name) {
                             labelStack.pop(); // Closing tag matches an open tag, pop from stack
-                        } else {
+                        }
+                        else {
                             bool absentOpenTag = 1;
                             std::stack<XMLLabel> tempLabelStack = labelStack;
                             tempLabelStack.pop();
@@ -83,7 +84,7 @@ string checkXML(const string& xmlContent) {
                                     XMLLabel tempLabel = labelStack.top();
                                     labelStack.pop();
                                     tempLabel.name = "</" + tempLabel.name;
-                                    errorsFound.push_back({tempLabel.lineNumber + 1, "Closing tag is not found" + tempLabel.name});
+                                    errorsFound.push_back({ tempLabel.lineNumber + 1, "Closing tag is not found" + tempLabel.name });
                                     absentOpenTag = 0;
                                     goto CheckOnLabel;
                                 }
@@ -93,18 +94,20 @@ string checkXML(const string& xmlContent) {
                                 // Correct the missing opening tag
                                 XMLLabel tempLabel = labelStack.top();
                                 labelName = "<" + labelName;
-                                errorsFound.push_back({currentLine + 1, "Opening tag is not found" + labelName});
+                                errorsFound.push_back({ currentLine + 1, "Opening tag is not found" + labelName });
                             }
                         }
-                    } else {
+                    }
+                    else {
                         // While the stack is empty, correct the absent opening tags
                         labelName = "<" + labelName;
-                        errorsFound.push_back({currentLine + 1, "Opening tag is not found" + labelName});
+                        errorsFound.push_back({ currentLine + 1, "Opening tag is not found" + labelName });
                     }
-                } else {
+                }
+                else {
                     if (currentLineContent[currentCharIndex + 1] != '?') {
                         // Push the opening tag onto the stack with its data
-                        XMLLabel *ptr;
+                        XMLLabel* ptr;
                         currentCharIndex = currentCharIndex + 1;
                         while (currentLineContent[currentCharIndex - 1] != '>') {
                             if (currentLineContent[currentCharIndex] == ' ') {
@@ -116,11 +119,13 @@ string checkXML(const string& xmlContent) {
 
                         labelStack.push(XMLLabel(labelName, currentLine, currentCharIndex));
 
-                    } else {
+                    }
+                    else {
                         break;
                     }
                 }
-            } else {
+            }
+            else {
                 currentCharIndex++;
             }
         }
@@ -135,13 +140,13 @@ string checkXML(const string& xmlContent) {
         std::string tempLabel = (labelStack.top()).name;
         labelStack.pop();
         tempLabel = "</" + tempLabel;
-        errorsFound.push_back({currentLine, "Closing tag is not found " + tempLabel});
+        errorsFound.push_back({ currentLine, "Closing tag is not found " + tempLabel });
     }
-    if(errorsFound.empty()){
+    if (errorsFound.empty()) {
         return "The XML file is Consistent";
     }
-    else{
-            return markErrorLines(xmlPrettifier(xmlMinifier(xmlContent)), errorsFound);
+    else {
+        return markErrorLines(xmlContent, errorsFound);
     }
 
 
@@ -149,7 +154,7 @@ string checkXML(const string& xmlContent) {
 
 // Function to correct XML content
 std::string correctXML(const std::string& xmlContent) {
-    vector<string> correctedXmlContent = splitString(xmlPrettifier(xmlMinifier(xmlContent)));
+    vector<string> correctedXmlContent = splitString(xmlContent);
     int currentLine = 0;
     int totalLines = correctedXmlContent.size();
     std::stack<XMLLabel> labelStack;
@@ -177,7 +182,8 @@ std::string correctXML(const std::string& xmlContent) {
                     if (!labelStack.empty()) {
                         if (labelName == (labelStack.top()).name) {
                             labelStack.pop(); // Closing tag matches an open tag, pop from stack
-                        } else {
+                        }
+                        else {
                             bool absentOpenTag = 1;
                             std::stack<XMLLabel> tempLabelStack = labelStack;
                             tempLabelStack.pop();
@@ -205,17 +211,19 @@ std::string correctXML(const std::string& xmlContent) {
                                 correctedXmlContent[tempLabel.lineNumber] = tempLine;
                             }
                         }
-                    } else {
+                    }
+                    else {
                         // While the stack is empty, correct the absent opening tags
                         std::string tempLine = correctedXmlContent[0];
                         labelName = "<" + labelName;
                         tempLine.insert(0, labelName);
                         correctedXmlContent[0] = tempLine;
                     }
-                } else {
+                }
+                else {
                     if (currentLineContent[currentCharIndex + 1] != '?') {
                         // Push the opening tag onto the stack with its data
-                        XMLLabel *ptr;
+                        XMLLabel* ptr;
                         currentCharIndex = currentCharIndex + 1;
                         while (currentLineContent[currentCharIndex - 1] != '>') {
                             if (currentLineContent[currentCharIndex] == ' ') {
@@ -227,11 +235,13 @@ std::string correctXML(const std::string& xmlContent) {
 
                         labelStack.push(XMLLabel(labelName, currentLine, currentCharIndex));
 
-                    } else {
+                    }
+                    else {
                         break;
                     }
                 }
-            } else {
+            }
+            else {
                 currentCharIndex++;
             }
         }
@@ -257,7 +267,6 @@ std::string correctXML(const std::string& xmlContent) {
 
     return result;
 }
-
 
 
 
